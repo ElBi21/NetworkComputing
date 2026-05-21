@@ -1,4 +1,4 @@
-# Network Computing Project
+<h1 align="center">Network Computing Project 🌐</h1>
 
 Project for recreating the BMC paper as part of the Network Computing course project
 
