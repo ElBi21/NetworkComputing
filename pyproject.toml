@@ -1,0 +1,10 @@
+[project]
+name = "networkcomputing"
+version = "0.1.0"
+description = "Network Computing Project"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "numpy>=2.4.6",
+    "pymemcache>=4.0.0",
+]

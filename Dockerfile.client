@@ -3,23 +3,29 @@ FROM ubuntu:18.04 AS netcomp_client
 RUN apt-get update -y && apt-get upgrade -y
 
 # Install required packages
-RUN apt-get install -y iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
+RUN apt-get install -y bash iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
 
-# Clone the repository
-RUN git clone https://github.com/Orange-OpenSource/bmc-cache /opt/bmc-cache
-# RUN cd /opt/bmc-cache && ls
-RUN /opt/bmc-cache/kernel-src-download.sh
-RUN /opt/bmc-cache/kernel-src-prepare.sh
+SHELL ["/bin/bash", "-c"]
 
-# Build BMC
-RUN (cd /opt/bmc-cache/bmc && make)
+# Clone UV and Just
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to $HOME/.local/bin
+RUN source $HOME/.local/bin/env
+ENV PATH="/root/.local/bin:$PATH"
 
-# Build MemcachedSR
-RUN (cd /opt/bmc-cache/memcached-sr && echo $(ls) && ./autogen.sh)
-RUN (cd /opt/bmc-cache/memcached-sr && CC=clang-9 CFLAGS='-DREUSEPORT_OPT=1 -Wno-deprecated-declarations' ./configure) 
-RUN (cd /opt/bmc-cache/memcached-sr && make)
+# Prepare directory structure
+RUN mkdir -p /app
+WORKDIR /app
 
-WORKDIR /opt/bmc-cache
+# Copy scripts for generating traffic
+COPY pyproject.toml .
+COPY uv.lock .
+COPY memcached_stress.py .
+COPY .python-version .
+COPY justfile .
+
+# Download packages
+RUN uv sync
 
 # Expose port for external communication
 EXPOSE 8080
