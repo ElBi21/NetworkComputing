@@ -24,13 +24,13 @@ docker exec -it <container_name> bash
 
 (if you have [Just](https://just.systems/man/en/) installed, run `just server_conn|client_1_conn|client_2_conn` instead)
 
-The possible container names are:
+The possible values for `<container_name>` are:
 
 - `netcomp_server`: the server with BMC;
 - `netcomp_client_1` and `netcomp_client_2`: the first and second clients.
 
-> [!WARN] **Be careful**
-> The containers will run indefinitely in the background. Make sure to stop them wither with `docker stop <container_name>` or through a tool like [Portainer](https://docs.portainer.io/start/install-ce). They can be started again either through Portainer or with `docker start <container_name>`
+> [!WARNING]
+> **Be careful**: the containers will run indefinitely in the background. Make sure to stop them wither with `docker stop <container_name>` or through a tool like [Portainer](https://docs.portainer.io/start/install-ce). They can be started again either through Portainer or with `docker start <container_name>`
 >
 > Again, if you have [Just](https://just.systems/man/en/) installed, you can run `just run` and `just stop` instead
 
