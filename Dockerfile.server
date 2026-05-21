@@ -2,27 +2,15 @@ FROM ubuntu:18.04 AS netcomp_server
 
 RUN apt-get update -y && apt-get upgrade -y
 
-# Install required packages
-RUN apt-get install -y bpfcc-tools iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
-
-# Clone the repository
-RUN git clone https://github.com/Orange-OpenSource/bmc-cache /opt/bmc-cache
-# RUN cd /opt/bmc-cache && ls
-RUN /opt/bmc-cache/kernel-src-download.sh
-RUN /opt/bmc-cache/kernel-src-prepare.sh
-
-# Build BMC
-RUN (cd /opt/bmc-cache/bmc && make)
-
-# Build MemcachedSR
-RUN (cd /opt/bmc-cache/memcached-sr && echo $(ls) && ./autogen.sh)
-RUN (cd /opt/bmc-cache/memcached-sr && CC=clang-9 CFLAGS='-DREUSEPORT_OPT=1 -Wno-deprecated-declarations' ./configure) 
-RUN (cd /opt/bmc-cache/memcached-sr && make)
+# Install memcached
+RUN apt-get install -y memcached iproute2 net-tools tcpdump
 
 WORKDIR /opt/bmc-cache
 
 # Expose port for external communication
-EXPOSE 8080
+EXPOSE 11211/tcp
+EXPOSE 11211/udp
 
 # Default command (can be overridden)
-CMD ["/bin/bash"]
+# memcached -u root -m 1024 -p 11211 -U 11211 -vv
+CMD ["memcached", "-u", "root", "-m", "1024", "-p", "11211", "-U", "11211", "-vv"]

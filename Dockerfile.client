@@ -1,34 +1,21 @@
 FROM ubuntu:18.04 AS netcomp_client
 
+# copy the python script
+COPY memcached_stress.py /opt/memcached_stress.py
+
 RUN apt-get update -y && apt-get upgrade -y
 
-# Install required packages
-RUN apt-get install -y bash iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
+# Run the python script
+RUN apt-get install -y python3 python3-pip && pip3 install --no-cache-dir numpy
 
-SHELL ["/bin/bash", "-c"]
-
-# Clone UV and Just
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-RUN curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to $HOME/.local/bin
-RUN source $HOME/.local/bin/env
-ENV PATH="/root/.local/bin:$PATH"
-
-# Prepare directory structure
-RUN mkdir -p /app
-WORKDIR /app
-
-# Copy scripts for generating traffic
-COPY pyproject.toml .
-COPY uv.lock .
-COPY memcached_stress.py .
-COPY .python-version .
-COPY justfile .
-
-# Download packages
-RUN uv sync
-
-# Expose port for external communication
-EXPOSE 8080
 
 # Default command
-CMD ["/bin/bash"]
+# RUN python3 /opt/client.py \
+#   --num-keys 50000 \
+#   --num-ops  500000 \
+#   --threads  8 \
+#   --alpha    1.2 \
+#   --get-ratio 0.8 \
+#   --value-size 256 \
+#   --warm-up
+CMD ["python3", "/opt/memcached_stress.py", "--num-keys", "5000", "--num-ops", "50000", "--threads", "2", "--alpha", "1.2", "--get-ratio", "0.8", "--value-size", "256", "--warm-up"]
