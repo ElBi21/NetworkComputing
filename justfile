@@ -28,15 +28,15 @@ build:
 
 [doc("Connect to the server container")]
 server_conn:
-    docker exec --privileged -it netcomp_server bash
+    docker exec -ti --privileged netcomp_server bash
 
 [doc("Connect to the first client container")]
 client_1_conn:
-    docker exec -it netcomp_client_1 bash
+    docker exec -ti --privileged netcomp_client_1 bash
 
 [doc("Connect to the second client container")]
 client_2_conn:
-    docker exec -it netcomp_client_2 bash
+    docker exec -ti --privileged netcomp_client_2 bash
 
 
 
@@ -53,3 +53,12 @@ stop:
     docker stop netcomp_server
     docker stop netcomp_client_1
     docker stop netcomp_client_2
+
+[doc("Clean the containers")]
+clean:
+    docker rm -f netcomp_server
+    docker rm -f netcomp_client_1
+    docker rm -f netcomp_client_2
+    docker image rm networkcomputing-exp_server:latest
+    docker image rm networkcomputing-exp_client_1:latest
+    docker image rm networkcomputing-exp_client_2:latest

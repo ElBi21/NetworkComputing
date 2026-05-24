@@ -3,7 +3,7 @@ FROM ubuntu:18.04 AS netcomp_server
 RUN apt-get update -y && apt-get upgrade -y
 
 # Install required packages
-RUN apt-get install -y bpfcc-tools iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
+RUN apt-get install -y vim bpfcc-tools iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
 
 # Clone the repository
 RUN git clone https://github.com/Orange-OpenSource/bmc-cache /opt/bmc-cache

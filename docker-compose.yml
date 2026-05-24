@@ -6,6 +6,7 @@ services:
     container_name: netcomp_server
     stdin_open: true
     tty: true
+    privileged: true
     networks:
       internal_net:
         ipv4_address: 10.0.1.2
@@ -24,6 +25,7 @@ services:
     container_name: netcomp_client_1
     stdin_open: true
     tty: true
+    privileged: true
     networks:
       internal_net:
         ipv4_address: 10.0.1.3
@@ -44,6 +46,7 @@ services:
     container_name: netcomp_client_2
     stdin_open: true
     tty: true
+    privileged: true
     networks:
       internal_net:
         ipv4_address: 10.0.1.4

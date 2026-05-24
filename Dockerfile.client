@@ -3,7 +3,7 @@ FROM ubuntu:18.04 AS netcomp_client
 RUN apt-get update -y && apt-get upgrade -y
 
 # Install required packages
-RUN apt-get install -y bash iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
+RUN apt-get install -y vim bash iproute2 perl git bc curl iputils-ping net-tools gpg tar xz-utils make gcc flex bison libssl-dev libelf-dev zsh llvm-9 clang-9 automake libevent-dev
 
 SHELL ["/bin/bash", "-c"]
 
