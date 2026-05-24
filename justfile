@@ -19,8 +19,12 @@ run_stress_2:
 # ======== Building & Setup commands ========
 
 [doc("Build the Docker network and containers")]
-build:
-    docker compose -p networkcomputing up -d
+build args="":
+    docker compose -p networkcomputing {{args}} up -d
+
+[doc("Build the Docker network sequentially, might be less heavy")]
+seq_build:
+    just build "--parallel 1"
 
 
 
