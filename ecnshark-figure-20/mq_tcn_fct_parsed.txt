@@ -1,0 +1,1050 @@
+['MQ_TCN_test_Flow_Monitor.xml']
+MQ_TCN_test_Flow_Monitor.xml
+Reading XML file . done.
+FlowID: 1 (TCP 10.1.1.1/49153 --> 10.1.6.2/8080)
+	TX bitrate: 5582059.66 kbit/s
+	RX bitrate: 5365507.56 kbit/s
+	Mean Delay: 0.29 ms
+	Packet Loss Ratio: 46.35 %
+	Flow size: 279102096 bytes, 192221 packets
+	Rx 268219356 bytes, 184726 packets
+	Device Lost 159620 packets
+	Real Lost 7495 packets
+	FCT: 0.4000
+FlowID: 3 (TCP 10.1.4.1/49153 --> 10.1.6.2/8180)
+	TX bitrate: 189082.28 kbit/s
+	RX bitrate: 186538.86 kbit/s
+	Mean Delay: 0.13 ms
+	Packet Loss Ratio: 30.30 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 10 packets
+	Real Lost 0 packets
+	FCT: 0.0014
+FlowID: 5 (TCP 10.1.3.1/49153 --> 10.1.6.2/8091)
+	TX bitrate: 247107.65 kbit/s
+	RX bitrate: 251487.28 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 25.81 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 8 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 7 (TCP 10.1.3.1/49154 --> 10.1.6.2/8181)
+	TX bitrate: 255095.35 kbit/s
+	RX bitrate: 254829.60 kbit/s
+	Mean Delay: 0.09 ms
+	Packet Loss Ratio: 0.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 0 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 8 (TCP 10.1.4.1/49154 --> 10.1.6.2/8146)
+	TX bitrate: 192146.98 kbit/s
+	RX bitrate: 192147.93 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 0.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 0 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 11 (TCP 10.1.3.1/49155 --> 10.1.6.2/8177)
+	TX bitrate: 253856.48 kbit/s
+	RX bitrate: 253858.13 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 8.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 2 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 13 (TCP 10.1.3.1/49156 --> 10.1.6.2/8099)
+	TX bitrate: 247167.78 kbit/s
+	RX bitrate: 241396.63 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 41.03 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 16 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 15 (TCP 10.1.3.1/49157 --> 10.1.6.2/8103)
+	TX bitrate: 245538.06 kbit/s
+	RX bitrate: 251778.40 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 14.81 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 4 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 16 (TCP 10.1.3.1/49158 --> 10.1.6.2/8085)
+	TX bitrate: 246557.59 kbit/s
+	RX bitrate: 253120.39 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 14.81 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 4 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 19 (TCP 10.1.4.1/49155 --> 10.1.6.2/8114)
+	TX bitrate: 192047.30 kbit/s
+	RX bitrate: 192048.25 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 4.17 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 1 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 21 (TCP 10.1.4.1/49156 --> 10.1.6.2/8100)
+	TX bitrate: 191428.65 kbit/s
+	RX bitrate: 191576.07 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 4.17 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 1 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 23 (TCP 10.1.4.1/49157 --> 10.1.6.2/8104)
+	TX bitrate: 192146.98 kbit/s
+	RX bitrate: 192134.97 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 0.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 0 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 25 (TCP 10.1.4.1/49158 --> 10.1.6.2/8158)
+	TX bitrate: 191112.14 kbit/s
+	RX bitrate: 189940.32 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 8.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 2 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 27 (TCP 10.1.3.1/49159 --> 10.1.6.2/8147)
+	TX bitrate: 252455.12 kbit/s
+	RX bitrate: 250542.16 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 17.86 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 5 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 29 (TCP 10.1.3.1/49160 --> 10.1.6.2/8143)
+	TX bitrate: 242018.12 kbit/s
+	RX bitrate: 236285.14 kbit/s
+	Mean Delay: 0.11 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 31 (TCP 10.1.4.1/49159 --> 10.1.6.2/8122)
+	TX bitrate: 181336.33 kbit/s
+	RX bitrate: 178213.55 kbit/s
+	Mean Delay: 0.14 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0015
+FlowID: 33 (TCP 10.1.3.1/49161 --> 10.1.6.2/8133)
+	TX bitrate: 252973.47 kbit/s
+	RX bitrate: 252975.11 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 14.81 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 4 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 35 (TCP 10.1.3.1/49162 --> 10.1.6.2/8089)
+	TX bitrate: 246236.10 kbit/s
+	RX bitrate: 240518.02 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 41.03 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 16 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 37 (TCP 10.1.3.1/49163 --> 10.1.6.2/8117)
+	TX bitrate: 237698.64 kbit/s
+	RX bitrate: 243537.04 kbit/s
+	Mean Delay: 0.11 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 39 (TCP 10.1.3.1/49164 --> 10.1.6.2/8127)
+	TX bitrate: 251623.81 kbit/s
+	RX bitrate: 251754.25 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 17.86 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 5 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 41 (TCP 10.1.4.1/49160 --> 10.1.6.2/8134)
+	TX bitrate: 192026.78 kbit/s
+	RX bitrate: 192147.93 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 0.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 0 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 43 (TCP 10.1.3.1/49165 --> 10.1.6.2/8115)
+	TX bitrate: 246217.67 kbit/s
+	RX bitrate: 240529.41 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 41.03 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 16 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 45 (TCP 10.1.4.1/49161 --> 10.1.6.2/8154)
+	TX bitrate: 184929.07 kbit/s
+	RX bitrate: 188441.96 kbit/s
+	Mean Delay: 0.13 ms
+	Packet Loss Ratio: 14.81 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 4 packets
+	Real Lost 0 packets
+	FCT: 0.0014
+FlowID: 47 (TCP 10.1.3.1/49166 --> 10.1.6.2/8137)
+	TX bitrate: 253612.29 kbit/s
+	RX bitrate: 253613.94 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 11.54 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 3 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 49 (TCP 10.1.3.1/49167 --> 10.1.6.2/8161)
+	TX bitrate: 255095.35 kbit/s
+	RX bitrate: 255097.03 kbit/s
+	Mean Delay: 0.09 ms
+	Packet Loss Ratio: 0.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 0 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 51 (TCP 10.1.4.1/49162 --> 10.1.6.2/8150)
+	TX bitrate: 191167.82 kbit/s
+	RX bitrate: 191168.76 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 4.17 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 1 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 53 (TCP 10.1.3.1/49168 --> 10.1.6.2/8153)
+	TX bitrate: 249609.18 kbit/s
+	RX bitrate: 244720.59 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 34.29 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 12 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 55 (TCP 10.1.4.1/49163 --> 10.1.6.2/8108)
+	TX bitrate: 191974.07 kbit/s
+	RX bitrate: 191791.87 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 11.54 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 3 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 57 (TCP 10.1.3.1/49169 --> 10.1.6.2/8175)
+	TX bitrate: 248127.10 kbit/s
+	RX bitrate: 242790.60 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 37.84 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 14 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 59 (TCP 10.1.4.1/49164 --> 10.1.6.2/8124)
+	TX bitrate: 182695.40 kbit/s
+	RX bitrate: 179487.55 kbit/s
+	Mean Delay: 0.14 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0014
+FlowID: 61 (TCP 10.1.3.1/49170 --> 10.1.6.2/8149)
+	TX bitrate: 237160.25 kbit/s
+	RX bitrate: 248625.69 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 41.03 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 16 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 63 (TCP 10.1.2.1/49153 --> 10.1.6.2/8081)
+	TX bitrate: 2830673.39 kbit/s
+	RX bitrate: 2829909.60 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 45.00 %
+	Flow size: 106148568 bytes, 73107 packets
+	Rx 106074516 bytes, 73056 packets
+	Device Lost 59770 packets
+	Real Lost 51 packets
+	FCT: 0.3000
+FlowID: 65 (TCP 10.1.3.1/49171 --> 10.1.6.2/8121)
+	TX bitrate: 247906.17 kbit/s
+	RX bitrate: 246061.28 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 42.50 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 17 packets
+	Real Lost 0 packets
+	FCT: 0.0010
+FlowID: 67 (TCP 10.1.3.1/49172 --> 10.1.6.2/8107)
+	TX bitrate: 244474.98 kbit/s
+	RX bitrate: 244036.21 kbit/s
+	Mean Delay: 0.10 ms
+	Packet Loss Ratio: 46.51 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 20 packets
+	Real Lost 0 packets
+	FCT: 0.0011
+FlowID: 69 (TCP 10.1.4.1/49165 --> 10.1.6.2/8174)
+	TX bitrate: 125455.56 kbit/s
+	RX bitrate: 86312.87 kbit/s
+	Mean Delay: 0.30 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0030
+FlowID: 71 (TCP 10.1.4.1/49166 --> 10.1.6.2/8118)
+	TX bitrate: 29362.83 kbit/s
+	RX bitrate: 32426.36 kbit/s
+	Mean Delay: 0.59 ms
+	Packet Loss Ratio: 47.73 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 21 packets
+	Real Lost 0 packets
+	FCT: 0.0082
+FlowID: 73 (TCP 10.1.4.1/49167 --> 10.1.6.2/8148)
+	TX bitrate: 37082.18 kbit/s
+	RX bitrate: 42454.43 kbit/s
+	Mean Delay: 0.51 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0065
+FlowID: 75 (TCP 10.1.3.1/49173 --> 10.1.6.2/8157)
+	TX bitrate: 150058.42 kbit/s
+	RX bitrate: 161194.16 kbit/s
+	Mean Delay: 0.20 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0017
+FlowID: 77 (TCP 10.1.4.1/49168 --> 10.1.6.2/8182)
+	TX bitrate: 75586.89 kbit/s
+	RX bitrate: 75904.24 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0034
+FlowID: 78 (TCP 10.1.3.1/49174 --> 10.1.6.2/8169)
+	TX bitrate: 207679.89 kbit/s
+	RX bitrate: 212300.53 kbit/s
+	Mean Delay: 0.13 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 81 (TCP 10.1.4.1/49169 --> 10.1.6.2/8120)
+	TX bitrate: 122468.20 kbit/s
+	RX bitrate: 121798.87 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 83 (TCP 10.1.3.1/49175 --> 10.1.6.2/8125)
+	TX bitrate: 207778.53 kbit/s
+	RX bitrate: 210970.85 kbit/s
+	Mean Delay: 0.13 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0014
+FlowID: 85 (TCP 10.1.3.1/49176 --> 10.1.6.2/8111)
+	TX bitrate: 117079.53 kbit/s
+	RX bitrate: 117795.96 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 86 (TCP 10.1.4.1/49170 --> 10.1.6.2/8106)
+	TX bitrate: 119131.89 kbit/s
+	RX bitrate: 119762.75 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 89 (TCP 10.1.3.1/49177 --> 10.1.6.2/8163)
+	TX bitrate: 209160.06 kbit/s
+	RX bitrate: 213646.49 kbit/s
+	Mean Delay: 0.12 ms
+	Packet Loss Ratio: 46.51 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 20 packets
+	Real Lost 0 packets
+	FCT: 0.0013
+FlowID: 91 (TCP 10.1.4.1/49171 --> 10.1.6.2/8160)
+	TX bitrate: 119109.35 kbit/s
+	RX bitrate: 121210.86 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 93 (TCP 10.1.4.1/49172 --> 10.1.6.2/8156)
+	TX bitrate: 122094.95 kbit/s
+	RX bitrate: 121580.42 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 95 (TCP 10.1.4.1/49173 --> 10.1.6.2/8138)
+	TX bitrate: 118912.48 kbit/s
+	RX bitrate: 119757.10 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 97 (TCP 10.1.4.1/49174 --> 10.1.6.2/8098)
+	TX bitrate: 85898.71 kbit/s
+	RX bitrate: 86380.15 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 46.51 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 20 packets
+	Real Lost 0 packets
+	FCT: 0.0030
+FlowID: 99 (TCP 10.1.3.1/49178 --> 10.1.6.2/8083)
+	TX bitrate: 139377.98 kbit/s
+	RX bitrate: 140745.78 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0019
+FlowID: 101 (TCP 10.1.3.1/49179 --> 10.1.6.2/8167)
+	TX bitrate: 143114.02 kbit/s
+	RX bitrate: 143870.98 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0019
+FlowID: 103 (TCP 10.1.4.1/49175 --> 10.1.6.2/8172)
+	TX bitrate: 164582.15 kbit/s
+	RX bitrate: 167652.29 kbit/s
+	Mean Delay: 0.15 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0017
+FlowID: 105 (TCP 10.1.3.1/49180 --> 10.1.6.2/8145)
+	TX bitrate: 139970.68 kbit/s
+	RX bitrate: 139964.81 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0019
+FlowID: 107 (TCP 10.1.3.1/49181 --> 10.1.6.2/8173)
+	TX bitrate: 89110.17 kbit/s
+	RX bitrate: 89742.19 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 47.73 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 21 packets
+	Real Lost 0 packets
+	FCT: 0.0028
+FlowID: 109 (TCP 10.1.3.1/49182 --> 10.1.6.2/8165)
+	TX bitrate: 208058.71 kbit/s
+	RX bitrate: 209212.89 kbit/s
+	Mean Delay: 0.13 ms
+	Packet Loss Ratio: 47.73 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 21 packets
+	Real Lost 0 packets
+	FCT: 0.0014
+FlowID: 111 (TCP 10.1.4.1/49176 --> 10.1.6.2/8096)
+	TX bitrate: 120627.51 kbit/s
+	RX bitrate: 119982.66 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 113 (TCP 10.1.3.1/49183 --> 10.1.6.2/8095)
+	TX bitrate: 140665.27 kbit/s
+	RX bitrate: 141336.09 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 46.51 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 20 packets
+	Real Lost 0 packets
+	FCT: 0.0019
+FlowID: 115 (TCP 10.1.4.1/49177 --> 10.1.6.2/8136)
+	TX bitrate: 164414.30 kbit/s
+	RX bitrate: 166535.14 kbit/s
+	Mean Delay: 0.16 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0017
+FlowID: 117 (TCP 10.1.3.1/49184 --> 10.1.6.2/8093)
+	TX bitrate: 88254.58 kbit/s
+	RX bitrate: 88326.00 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0029
+FlowID: 119 (TCP 10.1.4.1/49178 --> 10.1.6.2/8166)
+	TX bitrate: 120487.52 kbit/s
+	RX bitrate: 120342.09 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 121 (TCP 10.1.3.1/49185 --> 10.1.6.2/8082)
+	TX bitrate: 2471141.18 kbit/s
+	RX bitrate: 2471163.79 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 42.13 %
+	Flow size: 61778352 bytes, 42549 packets
+	Rx 61702848 bytes, 42497 packets
+	Device Lost 30932 packets
+	Real Lost 52 packets
+	FCT: 0.2000
+FlowID: 123 (TCP 10.1.3.1/49186 --> 10.1.6.2/8179)
+	TX bitrate: 115420.67 kbit/s
+	RX bitrate: 121801.60 kbit/s
+	Mean Delay: 0.23 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 125 (TCP 10.1.4.1/49179 --> 10.1.6.2/8164)
+	TX bitrate: 120261.18 kbit/s
+	RX bitrate: 120631.19 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 127 (TCP 10.1.4.1/49180 --> 10.1.6.2/8168)
+	TX bitrate: 86474.99 kbit/s
+	RX bitrate: 86462.96 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 42.50 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 17 packets
+	Real Lost 0 packets
+	FCT: 0.0030
+FlowID: 129 (TCP 10.1.4.1/49181 --> 10.1.6.2/8102)
+	TX bitrate: 75595.01 kbit/s
+	RX bitrate: 75962.79 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 41.03 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 16 packets
+	Real Lost 0 packets
+	FCT: 0.0033
+FlowID: 131 (TCP 10.1.3.1/49187 --> 10.1.6.2/8171)
+	TX bitrate: 140128.95 kbit/s
+	RX bitrate: 141443.23 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0019
+FlowID: 133 (TCP 10.1.3.1/49188 --> 10.1.6.2/8141)
+	TX bitrate: 101373.93 kbit/s
+	RX bitrate: 101385.46 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 37.84 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 14 packets
+	Real Lost 0 packets
+	FCT: 0.0025
+FlowID: 135 (TCP 10.1.4.1/49182 --> 10.1.6.2/8084)
+	TX bitrate: 120957.80 kbit/s
+	RX bitrate: 122541.95 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 137 (TCP 10.1.3.1/49189 --> 10.1.6.2/8087)
+	TX bitrate: 145642.99 kbit/s
+	RX bitrate: 145437.43 kbit/s
+	Mean Delay: 0.23 ms
+	Packet Loss Ratio: 46.51 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 20 packets
+	Real Lost 0 packets
+	FCT: 0.0018
+FlowID: 139 (TCP 10.1.3.1/49190 --> 10.1.6.2/8135)
+	TX bitrate: 120135.75 kbit/s
+	RX bitrate: 119696.66 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 36.11 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 13 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 141 (TCP 10.1.3.1/49191 --> 10.1.6.2/8105)
+	TX bitrate: 100503.81 kbit/s
+	RX bitrate: 100225.77 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 42.50 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 17 packets
+	Real Lost 0 packets
+	FCT: 0.0026
+FlowID: 143 (TCP 10.1.4.1/49183 --> 10.1.6.2/8140)
+	TX bitrate: 75010.06 kbit/s
+	RX bitrate: 75480.75 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0034
+FlowID: 145 (TCP 10.1.3.1/49192 --> 10.1.6.2/8097)
+	TX bitrate: 121114.77 kbit/s
+	RX bitrate: 120994.52 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 45.24 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 19 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 147 (TCP 10.1.4.1/49184 --> 10.1.6.2/8144)
+	TX bitrate: 102673.33 kbit/s
+	RX bitrate: 102842.93 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0025
+FlowID: 149 (TCP 10.1.4.1/49185 --> 10.1.6.2/8162)
+	TX bitrate: 119435.95 kbit/s
+	RX bitrate: 120703.68 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 151 (TCP 10.1.4.1/49186 --> 10.1.6.2/8128)
+	TX bitrate: 77791.91 kbit/s
+	RX bitrate: 77850.42 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 36.11 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 13 packets
+	Real Lost 0 packets
+	FCT: 0.0033
+FlowID: 153 (TCP 10.1.4.1/49187 --> 10.1.6.2/8110)
+	TX bitrate: 60590.53 kbit/s
+	RX bitrate: 61121.03 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0041
+FlowID: 155 (TCP 10.1.4.1/49188 --> 10.1.6.2/8170)
+	TX bitrate: 120095.05 kbit/s
+	RX bitrate: 122240.69 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 47.73 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 21 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 157 (TCP 10.1.4.1/49189 --> 10.1.6.2/8152)
+	TX bitrate: 124739.01 kbit/s
+	RX bitrate: 125998.25 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 47.73 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 21 packets
+	Real Lost 0 packets
+	FCT: 0.0021
+FlowID: 159 (TCP 10.1.3.1/49193 --> 10.1.6.2/8155)
+	TX bitrate: 102135.04 kbit/s
+	RX bitrate: 100823.64 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0025
+FlowID: 161 (TCP 10.1.3.1/49194 --> 10.1.6.2/8101)
+	TX bitrate: 151063.07 kbit/s
+	RX bitrate: 149990.50 kbit/s
+	Mean Delay: 0.22 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0018
+FlowID: 163 (TCP 10.1.4.1/49190 --> 10.1.6.2/8178)
+	TX bitrate: 123679.35 kbit/s
+	RX bitrate: 123670.91 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 42.50 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 17 packets
+	Real Lost 0 packets
+	FCT: 0.0021
+FlowID: 165 (TCP 10.1.3.1/49195 --> 10.1.6.2/8109)
+	TX bitrate: 100376.58 kbit/s
+	RX bitrate: 100218.11 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 42.50 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 17 packets
+	Real Lost 0 packets
+	FCT: 0.0026
+FlowID: 167 (TCP 10.1.4.1/49191 --> 10.1.6.2/8130)
+	TX bitrate: 119388.52 kbit/s
+	RX bitrate: 120986.25 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 168 (TCP 10.1.4.1/49192 --> 10.1.6.2/8094)
+	TX bitrate: 122837.85 kbit/s
+	RX bitrate: 124357.19 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 37.84 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 14 packets
+	Real Lost 0 packets
+	FCT: 0.0021
+FlowID: 171 (TCP 10.1.4.1/49193 --> 10.1.6.2/8092)
+	TX bitrate: 100457.05 kbit/s
+	RX bitrate: 100627.46 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 41.03 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 16 packets
+	Real Lost 0 packets
+	FCT: 0.0026
+FlowID: 173 (TCP 10.1.3.1/49196 --> 10.1.6.2/8113)
+	TX bitrate: 117767.88 kbit/s
+	RX bitrate: 119839.49 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 175 (TCP 10.1.4.1/49194 --> 10.1.6.2/8088)
+	TX bitrate: 101360.03 kbit/s
+	RX bitrate: 101083.23 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 47.73 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 21 packets
+	Real Lost 0 packets
+	FCT: 0.0026
+FlowID: 177 (TCP 10.1.4.1/49195 --> 10.1.6.2/8126)
+	TX bitrate: 121355.76 kbit/s
+	RX bitrate: 121207.97 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 178 (TCP 10.1.4.1/49196 --> 10.1.6.2/8090)
+	TX bitrate: 100245.72 kbit/s
+	RX bitrate: 100825.77 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 50.00 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 23 packets
+	Real Lost 0 packets
+	FCT: 0.0026
+FlowID: 181 (TCP 10.1.4.1/49197 --> 10.1.6.2/8112)
+	TX bitrate: 120137.85 kbit/s
+	RX bitrate: 121207.97 kbit/s
+	Mean Delay: 0.27 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 183 (TCP 10.1.4.1/49198 --> 10.1.6.2/8176)
+	TX bitrate: 103611.96 kbit/s
+	RX bitrate: 104174.42 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 45.24 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 19 packets
+	Real Lost 0 packets
+	FCT: 0.0025
+FlowID: 185 (TCP 10.1.3.1/49197 --> 10.1.6.2/8123)
+	TX bitrate: 118646.56 kbit/s
+	RX bitrate: 118706.30 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 187 (TCP 10.1.3.1/49198 --> 10.1.6.2/8119)
+	TX bitrate: 119763.67 kbit/s
+	RX bitrate: 119483.05 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 30.30 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 10 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 189 (TCP 10.1.3.1/49199 --> 10.1.6.2/8129)
+	TX bitrate: 118107.33 kbit/s
+	RX bitrate: 117939.59 kbit/s
+	Mean Delay: 0.25 ms
+	Packet Loss Ratio: 45.24 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 19 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 191 (TCP 10.1.3.1/49200 --> 10.1.6.2/8131)
+	TX bitrate: 140277.81 kbit/s
+	RX bitrate: 140160.14 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 45.24 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 19 packets
+	Real Lost 0 packets
+	FCT: 0.0019
+FlowID: 193 (TCP 10.1.4.1/49199 --> 10.1.6.2/8116)
+	TX bitrate: 101427.10 kbit/s
+	RX bitrate: 101287.12 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 48.89 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 22 packets
+	Real Lost 0 packets
+	FCT: 0.0026
+FlowID: 195 (TCP 10.1.3.1/49201 --> 10.1.6.2/8139)
+	TX bitrate: 139399.52 kbit/s
+	RX bitrate: 139770.01 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0019
+FlowID: 197 (TCP 10.1.4.1/49200 --> 10.1.6.2/8142)
+	TX bitrate: 87843.56 kbit/s
+	RX bitrate: 87862.36 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 41.03 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 16 packets
+	Real Lost 0 packets
+	FCT: 0.0029
+FlowID: 199 (TCP 10.1.3.1/49202 --> 10.1.6.2/8151)
+	TX bitrate: 117645.64 kbit/s
+	RX bitrate: 118078.26 kbit/s
+	Mean Delay: 0.24 ms
+	Packet Loss Ratio: 47.73 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 21 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 201 (TCP 10.1.4.1/49201 --> 10.1.6.2/8086)
+	TX bitrate: 121867.49 kbit/s
+	RX bitrate: 121580.42 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0022
+FlowID: 203 (TCP 10.1.4.1/49202 --> 10.1.6.2/8132)
+	TX bitrate: 100992.94 kbit/s
+	RX bitrate: 101236.07 kbit/s
+	Mean Delay: 0.26 ms
+	Packet Loss Ratio: 39.47 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 15 packets
+	Real Lost 0 packets
+	FCT: 0.0026
+FlowID: 205 (TCP 10.1.3.1/49203 --> 10.1.6.2/8159)
+	TX bitrate: 116389.44 kbit/s
+	RX bitrate: 115898.02 kbit/s
+	Mean Delay: 0.25 ms
+	Packet Loss Ratio: 43.90 %
+	Flow size: 29200 bytes, 23 packets
+	Rx 29200 bytes, 23 packets
+	Device Lost 18 packets
+	Real Lost 0 packets
+	FCT: 0.0023
+Avg FCT: 0.0107
+Large Flow Avg FCT: 0.3000
+Small Flow Avg FCT: 0.0020
+Total TX Packets: 310177
+Total RX Packets: 302579
+Total Lost Packets: 251962
+Max Small flow Id: 71
+The FCT of 99 small flow is: 0.0082
+The FCT of 99 flow is: 0.3000
+
+AVG FCT: 0.010717
+AVG Large flow FCT: 0.299998
+AVG Small flow FCT: 0.002039
+AVG Small flow 99 FCT: 0.008166
+Total Flow: 103.000000
+Total TX: 310177.000000
+Total RX: 302579.000000
