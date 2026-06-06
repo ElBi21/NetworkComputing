@@ -42,3 +42,30 @@ The containers are on two subnets:
 - `10.0.2.0/24` for the external communication.
 
 Specifically, the 4th digit of the IP address used is `2` for the server, `3` for client 1 and `4` for client 2. For instance, the internal IP address for the 2nd client is `10.0.1.4`, while its external one is `10.0.2.4`. You can look at all the addresses in the docker-compose.yml file.
+
+## Software setup
+
+### Server
+
+1. connect to the server container:
+
+```bash
+just server_conn
+```
+
+2. mount BPF's filesystem
+
+```bash
+mount -t bpf none /sys/fs/bpf/
+```
+
+3. run the BMC program
+
+```bash
+cd bmc
+IFINDEX=$(ip a | awk '/^[0-9]+:/{idx=int($1)} /inet 10\.0\.1\./{print idx; exit}')
+./bmc $IFINDEX
+```
+
+> [!NOTE]
+> The `$IFINDEX` variable denotes the index of the interface that connects all the machines involved in the experiment. In a different setting, one should first search the interface index with commands such as `ip a`
