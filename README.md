@@ -1,71 +1,183 @@
-<h1 align="center">Network Computing Project 🌐</h1>
+# Replicating: Enabling ECN for Datacenter Networks with RTT Variations
 
-Project for recreating the BMC paper as part of the Network Computing course project
+**Team Members:**  
+Stanislaw Ostyk-Narbutt (stanislaw.ostyknarbutt@mail.polimi.it)
+FirstName LastName2 (email address);  
+FirstName LastName3 (email address)
 
-## Docker Setup for local development
+---
 
-0. Make sure that:
-    - you have Docker installed on your machine;
-    - you're not using ports `9010`, `9011` and `9012`;
+**Source Paper:**
+Junxue Zhang, Wei Bai, and Kai Chen. 2019. Enabling ECN for Datacen-
+ter Networks with RTT Variations. In The 15th International Conference
+on emerging Networking EXperiments and Technologies (CoNEXT ’19), De-
+cember 9–12, 2019, Orlando, FL, USA. ACM, New York, NY, USA, 13 pages.
+https://doi.org/10.1145/3359989.3365426
 
-1. After having unpacked, run:
 
-```sh
-docker compose -p networkcomputing up -d
-```
+**Project:**
+All slurm cluster scripts, python plotting files, and modified NS3 topology files are in the following repo:
+[github.com/ElBi21/NetworkComputing](github.com/ElBi21/NetworkComputing)
 
-(if you have [Just](https://just.systems/man/en/) installed, run `just build` instead)
+It is organized in folders by figure recreated (e.g. `fig2` for Figure 2, etc.) and `fat-tree` contains the new extension we added to the paper.
 
-2. Wait for the build process to end, and then you will be able to connect to the containers with
+---
 
-```sh
-docker exec -it <container_name> bash
-```
+# 1. Introduction
 
-(if you have [Just](https://just.systems/man/en/) installed, run `just server_conn|client_1_conn|client_2_conn` instead)
+<!-- Introduce the paper by summarizing:
 
-The possible values for `<container_name>` are:
+- The problem the paper addresses and its importance
+- The key ideas behind its solution and its approach
+- The main contributions -->
 
-- `netcomp_server`: the server with BMC;
-- `netcomp_client_1` and `netcomp_client_2`: the first and second clients.
 
-> [!WARNING]
-> **Be careful**: the containers will run indefinitely in the background. Make sure to stop them wither with `docker stop <container_name>` or through a tool like [Portainer](https://docs.portainer.io/start/install-ce). They can be started again either through Portainer or with `docker start <container_name>`
->
-> Again, if you have [Just](https://just.systems/man/en/) installed, you can run `just run` and `just stop` instead
 
-## Network description
+# 2. Selected Result
 
-The containers are on two subnets:
+<!-- Mention which result of the paper you are reproducing, and explain its importance.
 
-- `10.0.1.0/24` for the internal communication;
-- `10.0.2.0/24` for the external communication.
+For example:
 
-Specifically, the 4th digit of the IP address used is `2` for the server, `3` for client 1 and `4` for client 2. For instance, the internal IP address for the 2nd client is `10.0.1.4`, while its external one is `10.0.2.4`. You can look at all the addresses in the docker-compose.yml file.
+> “Figure 1 shows that method A improves throughput by 35% over method B under workload *W*. This experiment shows that paper can effectively overcome the motivated challenge.”
 
-## Software setup
+<center>
+  <img
+    alt="The figure shows that method A improves throughput compared to method B"
+    src="figures/one_bar.png"
+    style="width:30%;"
+    />
+  <p>Figure 1: The figure shows that method A improves throughput compared to method B</p>
+</center> -->
 
-### Server
+# 3. Environment Setup
 
-1. connect to the server container:
+*Note:* This section should contain enough information to allow someone else to
+reproduce *your* report. Share hardware and/or software setup relevant to your
+experiment. For example:
 
-```bash
-just server_conn
-```
+**Hardware Environment:**
+CPU, Memory, Storage, Network, Cloud / local / cluster, Any relevant micro-architectural details
 
-2. mount BPF's filesystem
+**Software Environment**
+OS version, Kernel version, Compiler version, Libraries, Dependencies, Paper artifact used (Yes/No; version/commit hash)
 
-```bash
-mount -t bpf none /sys/fs/bpf/
-```
+**Configuration Parameters:**
 
-3. run the BMC program
+- Workload configuration
+- Dataset
+- Runtime parameters and flags
 
-```bash
-cd bmc
-IFINDEX=$(ip a | awk '/^[0-9]+:/{idx=int($1)} /inet 10\.0\.1\./{print idx; exit}')
-./bmc $IFINDEX
-```
+**Deviations from the Original Setup:**
 
-> [!NOTE]
-> The `$IFINDEX` variable denotes the index of the interface that connects all the machines involved in the experiment. In a different setting, one should first search the interface index with commands such as `ip a`
+Clearly describe any difference between papers and your experiment environment.
+
+- Hardware differences
+- Software version differences
+- Dataset substitutions
+- Unavailable components
+
+Explain why these deviations were necessary.
+
+If something was **missing in the original paper**, state it. For example:
+
+> The paper does not specify X. We assumed Y (or explored range *a* to *b*).
+
+# 4. Experiment Result
+
+> Explain how your experiment was conducted and then what results you acquired. 
+Afterwards, compare your results with those of the paper and state your
+takeaways.
+
+Step-by-step description:
+
+1. Execution procedure
+1. Measurement method
+1. Number of runs
+1. Statistical treatment (mean, median, CI, etc.)
+
+Also Describe:
+
+- How did you ensure correctness (did you check also other metrics to make sure the experiment is running correctly?)
+- Did you do any debugging? Discuss issues you faced and how you overcame them (if applicable consider allocating a subsection for this item) 
+
+Share your result and compare them with the paper's. Then discuss your takeaways.
+
+For comparison include:
+
+- Graph(s) or table(s)
+- Matching axes and units with the source paper
+- Error bars if applicable
+- You may want to report difference with the original results (e.g., absolute
+number or percentage).
+
+For example:
+
+<!-- <center>
+  <div style="display:inline-block; width:30%;">
+    <img
+      alt="The figure shows that method A improves throughput compared to method B"
+      src="figures/one_bar.png"
+      style="width:100%"
+      />
+    <p>Figure 2: The figure shows that method A improves throughput compared to method B</p>
+  </div>
+  <div style="display:inline-block; width:30%; padding-left: 1em">
+    <img
+      alt="Our reproduction of Figure 1 shows results with the similar trend as claimed by the paper"
+      src="figures/two_bar.png"
+      style="width:100%"
+      />
+    <p>Figure 3: Our reproduction of Figure 1 shows results with the similar trend as claimed by the paper</p>
+  </div>
+</center> -->
+
+> **Reminder:** the goal is not achieve the exact results of the paper, but to do a rigorous experiment with similar assumptions from the source paper and gain insight. The insight can be correctness of work, failure to reproduce same results, or even infeasibility of doing such experiment for interesting reasons.
+
+# 5. Further Exploration
+
+In this project you are required to also explore a research question of your own. Either:
+
+1. Take the same test with different input workload or a variation of a test that is not present in the paper and comment the results you obtain
+1. Implement a new feature on top of the system you evaluated and show a figure showing the performance
+
+Discuss which approach you take, and what you explored. Explain what was your
+motivation and importance of your question.
+
+## 5.1. Methodology and Result
+
+Report the experiment you designed for answering the question and share the
+result you got.
+
+Include:
+
+- Graph(s) or table(s)
+- How the experiment was conducted (share the details)
+- What did you discover?
+
+# 6. Reproducibility Assessment of the Paper
+
+<!-- Evaluate the paper itself:
+
+- Was the methodology clearly described?
+- Was the artifact usable?
+- How difficult was reproduction? -->
+
+Part of the paper was very well documented and reproducible, as the authors provide a Docker image with the preconfigured NS3 simulation to run certain experiments. However, this only pertains to the large scale testing they did, all earlier graphs, including Figure 2 as an example, required us to experiment with NS3 ourselves in order to try and replicate. The code itself was well written, although it did contain some typos even in the command line interface, but overall the authors did a great job with ensuring reproducability. 
+
+# 7. Conclusion
+
+Conclude the report by mentioning the takeaways of experiments you did
+
+
+---
+
+# Appendix
+
+You are asked to write this report using Markdown. You can find a cheat sheet
+of Markdown syntax at this [link](https://rust-lang.github.io/mdBook/format/markdown.html).
+
+For generating a PDF file from your report you can use a tool of your choice.
+*md2pdf* is one such tool. See this [link](https://pypi.org/project/md2pdf/)
+for more information about it. You can also use an online editor such as [this](https://www.md2pdf.io/).
+
