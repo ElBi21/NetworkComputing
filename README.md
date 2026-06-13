@@ -85,7 +85,7 @@ If something was **missing in the original paper**, state it. For example:
 
 # 4. Experiment Result
 
-> Explain how your experiment was conducted and then what results you acquired. 
+<!-- > Explain how your experiment was conducted and then what results you acquired. 
 Afterwards, compare your results with those of the paper and state your
 takeaways.
 
@@ -111,7 +111,7 @@ For comparison include:
 - You may want to report difference with the original results (e.g., absolute
 number or percentage).
 
-For example:
+For example: -->
 
 <!-- <center>
   <div style="display:inline-block; width:30%;">
@@ -132,28 +132,60 @@ For example:
   </div>
 </center> -->
 
-> **Reminder:** the goal is not achieve the exact results of the paper, but to do a rigorous experiment with similar assumptions from the source paper and gain insight. The insight can be correctness of work, failure to reproduce same results, or even infeasibility of doing such experiment for interesting reasons.
+<!-- > **Reminder:** the goal is not achieve the exact results of the paper, but to do a rigorous experiment with similar assumptions from the source paper and gain insight. The insight can be correctness of work, failure to reproduce same results, or even infeasibility of doing such experiment for interesting reasons. -->
+
+We replicated several of the results of the paper in order to assess its various claims about ECN#'s performance. Each is documented below.
+
+### Recreated Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
+
+<center>
+  <div style="display:inline-block; width:30%; padding-left: 1em">
+    <img
+      alt="Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
+      src="figures/Recreated-Fig2.png"
+      style="width:100%"
+      />
+    <p>Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup</p>
+  </div>
+</center>
+
 
 # 5. Further Exploration
-
+<!-- 
 In this project you are required to also explore a research question of your own. Either:
 
 1. Take the same test with different input workload or a variation of a test that is not present in the paper and comment the results you obtain
 1. Implement a new feature on top of the system you evaluated and show a figure showing the performance
 
 Discuss which approach you take, and what you explored. Explain what was your
-motivation and importance of your question.
+motivation and importance of your question. -->
+
+For the extension, we wanted to test the effectiveness of NS3 on a new topology. The paper only demonstrates its effectiveness on a Leaf-Spine two-tier network topology with 128 servers, and we were curious if a different topology would show similar trends. We were particularly curious about Fat Trees because their three-tier architecture would add complexity to the network and provide more possible flow paths. Since we already saw from our experimentation on recreating Figure 2 that topology really matters and may lead to differing results, we were curious if ECN# would perform well. 
+
+We dug into the code to find where the topology is defined, which is in `examples/rtt-variations/large-scale.cc`. Here, the NS3 topology is defined. 
+
 
 ## 5.1. Methodology and Result
 
-Report the experiment you designed for answering the question and share the
+<!-- Report the experiment you designed for answering the question and share the
 result you got.
 
 Include:
 
 - Graph(s) or table(s)
 - How the experiment was conducted (share the details)
-- What did you discover?
+- What did you discover? -->
+
+<center>
+  <div style="display:inline-block; width:30%; padding-left: 1em">
+    <img
+      alt="Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
+      src="figures/Fat-Tree-Experiment.png"
+      style="width:100%"
+      />
+    <p>Figure 2: ECN# vs TCN Performance Comparison on Fat Tree with K=4</p>
+  </div>
+</center>
 
 # 6. Reproducibility Assessment of the Paper
 
