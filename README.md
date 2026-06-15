@@ -104,6 +104,22 @@ Section 5.4.1 of the paper presents a second experiment in which the number of c
 
 The CoDel experiences an FCT degradation once there are more than 100 concurrent senders, while ECN# keeps a similar performance to DCTCP-RED-Tail. Thus, ECN# is a good choice for control over a bursty traffic.
 
+### Recreating the experiments with packer schedulers (Figure 20)
+
+Section 5.4.3 compares ECN# with TCN in order to show how ECN# works with arbitrary packet scheduler. The switch is configured to Deficit Weighted Round Robin (DWRR) with 3 queues and their weights with the ratio 2 : 1 : 1. From each of the sender a long-lived TCP flow is created and classified into the corresponding queue. The rest of the senders randomly start short flows. The results are presented in the following figure:
+
+<center>
+  <div style="display:inline-block; width:50%; padding-left: 1em">
+    <img
+      src="figures/Original-Fig20.png"
+      style="width:100%"
+      />
+    <!-- <p>Figure 16.</p> -->
+  </div>
+</center>
+
+The paper observes that at the beginning only the queue 1 is active with the goodput achieved of 9.6 Gbps per second. Once flow 2 starts, queue 2 also becomes active and flow 1 achieves 6.42 Gbps goodput. Finally, when all three flows are started, the achieved goodputs per flows are 4.82Gbps,  2.40Gbps, and 2.40Gbps. The short flow FCT among all queues is also measured and presented in the Figure 20b. The results in the paper mention that ECN# achieves 19.6% better average FCT for short flows than TCN.
+
 # 3. Environment Setup
 First, we introduce the common environment set up for all experiments. After, we introduce additional details for the environment setup for each recreated figure. 
 
@@ -183,6 +199,19 @@ The code provided by authors includes the executable `queue-track` to be ran for
 This corresponds to Section 5.4.1 and Figure 17 of the paper. 
 
 As barely any details are presented in the paper, we had to assume that mostly the default values of the `queue-track` are used. The important value to change is the number of concurrent senders, which is changed from 25 to 200 in the steps of 25, as can be seen in the Figure 17 of the paper.
+
+
+### Recreating the experiments with packer schedulers (Figure 20)
+
+This corresponds to Section 5.4.3 of the paper. We have used the multiqueue executable `mq` to run the experiments, as the defautl setup highly corresponds with the experiment description in the paper. Most importantly, the three queues are started and the weights are given with the ratio 2:1:1, as can be seen in the following snippet:
+
+```C++
+    dwrrQdisc->AddDWRRClass (queueDisc1, 0, 3000);
+    dwrrQdisc->AddDWRRClass (queueDisc2, 1, 1500);
+    dwrrQdisc->AddDWRRClass (queueDisc3, 2, 1500);
+```
+
+The other values have been left as the default ones.
 
 # 4. Experiment Result
 
@@ -358,6 +387,27 @@ There are several reasons for that, all arrising from a possible mismatch in the
 
 To conclude, we suspect that the results for this figure could not be reproduced easily by the lack of the experiment configuration details in the paper and the computation constraints on our side.
 
+
+
+### Recreating the experiments with packer schedulers (Figure 20)
+
+After running the experiment with `mq` executable and parsing the results, the following results have been achieved:
+
+<center>
+  <div style="display:inline-block; width:80%; padding-left: 1em">
+    <img
+      src="figures/Recreated-Fig20a.png"
+      style="width:45%"
+      />
+    <img
+      src="figures/Recreated-Fig20b.png"
+      style="width:45%"
+      />
+    <p>Figure: Our reproduction of Figure 20. The experiment measured and compared ECN# with TCN when using an arbitrary packet scheduler.</p>
+  </div>
+</center>
+
+The results match the ones from the paper. To be more precise, the flow throughputs match the Figure 20a, and the FCT of short flows get a similar cummulative distribution function as in the paper. The only caveat is that the paper measure goodput, whereas in our experiment we have used throughput to plot. However, goodput is just only slightly smaller, and the trend would be very similar. Because of this, we have decided to stick with the throughput for our calculations for simplicity.
 
 # 5. Further Exploration
 <!-- 
