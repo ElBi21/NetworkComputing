@@ -1,19 +1,18 @@
 # Replicating: Enabling ECN for Datacenter Networks with RTT Variations
 
 **Team Members:**  
-Stanislaw Ostyk-Narbutt (stanislaw.ostyknarbutt@mail.polimi.it)
-FirstName LastName2 (email address);  
+Stanisław Ostyk-Narbutt (stanislaw.ostyknarbutt@mail.polimi.it);
+Aldas Lenkšas (aldas.lenksas@mail.polimi.it);  
 FirstName LastName3 (email address)
 
 ---
 
 **Source Paper:**
-Junxue Zhang, Wei Bai, and Kai Chen. 2019. Enabling ECN for Datacen-
-ter Networks with RTT Variations. In The 15th International Conference
-on emerging Networking EXperiments and Technologies (CoNEXT ’19), De-
-cember 9–12, 2019, Orlando, FL, USA. ACM, New York, NY, USA, 13 pages.
-https://doi.org/10.1145/3359989.3365426
+Junxue Zhang, Wei Bai, and Kai Chen. 2023. Enabling ECN for Datacenter Networks with RTT Variations. IEEE Transactions on Cloud Computing 11, No. 3 (July-September 2023), 2349–2364. IEEE, 16 pages. https://doi.org/10.1109/TCC.2022.3204988
 
+<!-- Junxue Zhang, Wei Bai, and Kai Chen. 2019. Enabling ECN for Datacenter Networks with RTT Variations. In The 15th International Conference
+on emerging Networking EXperiments and Technologies (CoNEXT ’19), December 9–12, 2019, Orlando, FL, USA. ACM, New York, NY, USA, 13 pages.
+https://doi.org/10.1145/3359989.3365426 -->
 
 **Project:**
 All slurm cluster scripts, python plotting files, and modified NS3 topology files are in the following repo:
@@ -31,7 +30,11 @@ It is organized in folders by figure recreated (e.g. `fig2` for Figure 2, etc.) 
 - The key ideas behind its solution and its approach
 - The main contributions -->
 
+The base RTT (round-trip time) consists of transmission delay, propagation delay, and processing delay. As the first two are rather negligible inside datacenters, processing delay is the main contribution to the RTT, which makes it vary significantly, as flows traverse different components. ECN has been used in datacenters to deliver high throughput low latency communications. Having assumed a fixed RTT value, ECN performs an instantaneous marking based on such a value. In practice, as shown in the paper, this leads to performance degradation. Taking a low-percentile RTT value results in throughput degradation, while a high-percentile RTT value can lead to an increased latency.
 
+Authors have proposed a new solution that they named ECN#. It is based on the instantaneous ECN marking with an addition of marking packets when a persistent switch queue buildup is observed. This lightweight solution is able to handle bursts, maintain high throughput and eliminates unnecessary queueing delay. In order to detect the persistent queue buildup, the sojourn time (time in the queue for each packet) is measured and compared to the threshold. The marking is made conservatively, meaning that ECN# marks one packet in the interval, while only reducing threshold if the sojourn times continuously exceed the threshold.
+
+The experiments were done in a small but representable testbed, as well as with a larger scale network setup simulated in NS3. As shown in the paper, ECN# achieves smaller average FCT (Flow Completion Time) for small flows while achieving a similar FCT for larger flows (Section 5.2 of the paper). Moreover, the proposed method keeps a lower queue occupancy compared to the other common practices (Section 5.4.1 of the paper).
 
 # 2. Selected Result
 
