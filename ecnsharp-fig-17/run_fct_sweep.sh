@@ -1,10 +1,8 @@
 #!/bin/bash
 # run_fct_sweep.sh
 
-#SENDERS=(25 50 75 100 125 150 175 200)
-SENDERS=(175 200)
-#AQMS=(RED CODEL ECNSharp)
-AQMS=(ECNSharp)
+SENDERS=(25 50 75 100 125 150 175 200)
+AQMS=(RED CODEL ECNSharp)
 
 for AQM in "${AQMS[@]}"; do
     for N in "${SENDERS[@]}"; do
@@ -15,8 +13,8 @@ for AQM in "${AQMS[@]}"; do
             --transportProt=DcTcp \
             --numOfSenders=$N \
             --bufferSize=600 \
-            --endTime=14.0 \
-            --simEndTime=15.0 \
+            --endTime=4.5 \
+            --simEndTime=5.0 \
             --load=0.9 \
             --flowNum=1000 \
             --REDMarkingThreshold=40 \

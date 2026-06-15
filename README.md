@@ -70,7 +70,7 @@ low latency simultaneously.</p>
   </div>
 </center>
 
-### Recreating the experiments on the queue occupancy
+### Recreating the experiments on the queue occupancy (Figure 16)
 
 Section 5.4.1 of the paper introduces the experiment performed to measure and compare the queue occupancy of the different schemes. The results are presented in the Figure 16 of the paper:
 
@@ -86,6 +86,23 @@ Section 5.4.1 of the paper introduces the experiment performed to measure and co
 </center>
 
 The experiments measure the queue link of the bottleneck link for the 0.005 seconds duration starting at 4s mark with 100 concurrent flows happening, and a burst targetted at around 4s mark. The results show that the ECN# keep lower queue occupancy (8 packets) compared to DCTCP-RED-Tail (182 packets). What is more, ECN# achieves comparable results in handling bursty traffic when compared to DCTCP-RED-Tail and CoDel. ECN# has not dropped any packets, while CoDel dropped 125 packets during the burst.
+
+### Recreating the experiments on bursty flows with different sender size (Figure 17)
+
+Section 5.4.1 of the paper presents a second experiment in which the number of concurrent query senders is changed from 25 to 200, and the query completion time is traced. The results are then shown in the Figure 17 of the paper:
+
+
+<center>
+  <div style="display:inline-block; width:50%; padding-left: 1em">
+    <img
+      src="figures/Original-Fig17.png"
+      style="width:100%"
+      />
+    <!-- <p>Figure 16.</p> -->
+  </div>
+</center>
+
+The CoDel experiences an FCT degradation once there are more than 100 concurrent senders, while ECN# keeps a similar performance to DCTCP-RED-Tail. Thus, ECN# is a good choice for control over a bursty traffic.
 
 # 3. Environment Setup
 First, we introduce the common environment set up for all experiments. After, we introduce additional details for the environment setup for each recreated figure. 
@@ -155,12 +172,17 @@ We used TCN in the simulator for instantaneous marking, but this took as a param
 
 But these again were difficult to emulate, and we discovered after lots of trial and error that the culprit was the simulation time. We had to increase it from the default 0.5 seconds to 4 seconds, with new flows stopping at 3 seconds. This made the simulation basically fry our laptops, so we ended up writing a Slurm script, using Apptainer to launch their Docker container, and running the simulation on the Galileo 100 cluster, which we coincidentally had access to thanks to another course. The Slurm script is provided in our repository under the `fig2` folder, together with all the used files for this experiment to ensure full reproducibility of our methodology.
 
-### Recreating experiments on the queue occupancy
+### Recreating experiments on the queue occupancy (Figure 16)
 
 The results on the queue occupancy correspond to Section 5.4.1 and Figure 16 in the paper.
 
 The code provided by authors includes the executable `queue-track` to be ran for this experiment. The code creates all the required setup: the background flows are installed and incast flows, consistent with "100 concurrent query flows" description. However, not all values are the same in paper as in the code's default values. To be more precise, the `bufferSize` seems to be 600 based on the plot rather than 100 which is the default value. The code also expects `endTime` and `simulationEndTime` which are not described in the paper. Knowing that we want to have the burst in the timespan between 4.000 seconds and 4.005 seconds, the good values turned out to be `endTime=4.5` and `simulationEndTime=5.0`, as these produce a burst around the 4s mark. The thresholds were also not described, so we have chosen them to what seemed a reasonable choise and representative to the results in the paper. The actual values used are mentioned below in Section 4. Experiment Result.
 
+### Recreating the experiments on bursty flows with different sender size (Figure 17)
+
+This corresponds to Section 5.4.1 and Figure 17 of the paper. 
+
+As barely any details are presented in the paper, we had to assume that mostly the default values of the `queue-track` are used. The important value to change is the number of concurrent senders, which is changed from 25 to 200 in the steps of 25, as can be seen in the Figure 17 of the paper.
 
 # 4. Experiment Result
 
@@ -245,7 +267,7 @@ Running the `job.sh` scripts provided in our repository under the `fig2` folder 
 </center>
 Although there is a clear difference between the replicated Figure 2 and the paper's original, this stems from the topology difference, and ours is simulated while theirs is on a real testbed. Nonetheless, we actually derive a similar overall trend: the 99th percentile is heavily penalized as we increase the marking threshold. The most shocking difference was that no matter how we configured our experiment, we could not get the average FCT to decrease as the marking threshold increased, i.e., higher throughput. In our results, it always gradually increased. We thought about this a lot and concluded it must be because our topology is less congested since we have more routes than the original testbed, and therefore, we do not see a throughput increase with a higher threshold, as there is not a single simple bottleneck as in the original paper. Nonetheless, our conclusion remains the same: ECN penalizes latency as we increase the threshold. 
 
-### Recreating the experiment on the queue occupancy
+### Recreating the experiment on the queue occupancy (Figure 16)
 
 To run the experiment, the `queue-track` tool was ran with the following configurations, each for different scheme:
 
@@ -314,6 +336,27 @@ The results are as presented in the figure below:
 </center>
 
 The exact lines and values are not neccesarily same as in the paper, possibly due to small differences in the configuration. However, the patterns are still clear and match the results from the paper. DCTCP-RED-Tail reaches the maximum queue occupancy of 416 packets, CoDel reaches the buffer limit of 600 packets, while ECN# reaches only 318 packets. This replicates the results that no packets are dropped when handling burst with ECN#. However, one inconsistency is that in the paper DCTCP-RED-Tail obtains the queue occupancy of 182 packets overall, while in our experiment it gets lower and close to zero after the burst. This can be explained in the possible difference of the simulation time configuration or the difference in the burst or background traffic generation, which is not fully explained in the paper.
+
+### Recreating the experiments on bursty flows with different sender size (Figure 17)
+
+`queue-track` was used as the main tool. The bash script that was used to sweep over the different schemes and different number of the concurrent senders is present in `ecnsharp-fig-17/run_fct_sweep.sh`. The resulting graph is as follows:
+
+
+<center>
+  <div style="display:inline-block; width:50%; padding-left: 1em">
+    <img
+      src="figures/Recreated-Fig17.png"
+      style="width:100%"
+      />
+    <p>Figure: Our reproduction of Figure 17. The experiment measured the flow completion time during burst traffic with different number of concurrent senders.</p>
+  </div>
+</center>
+
+As it can be seen, our reproduced results are totally different. The average FCT seems to be rather similar for all schemes, while 99th percentile obtains a jump at the beginning  and then proceeds to increase similarly for all schemes.
+
+There are several reasons for that, all arrising from a possible mismatch in the configuration, as the details are not presented in the paper. When running the simulation, background noise traffic has been generated and the overall simulation end time was set to 5s, while the actual experiment could have been run with completely different values. Moreover, the thresholds (RED marking threshold, ECN# marking threshold, etc.) were used as the default ones from the code, while there is a chance that the authors have used a different setup values. Lastly, the shape of the 99th percentile results that we have obtained indicates a clear issue, arrising either from the inclusion of the background flows or from the fact that authors might have run the simulation several times with different seeds and averaged the results. We have run our experiment only once, as already running it for a short simulation period over all possible combinations for one plot took more than 4 hours.
+
+To conclude, we suspect that the results for this figure could not be reproduced easily by the lack of the experiment configuration details in the paper and the computation constraints on our side.
 
 
 # 5. Further Exploration
