@@ -69,7 +69,7 @@ ax.set_xlim(4.000, 4.005)
 ax.set_ylim(0, 700)
 ax.set_xlabel('Time(s)', fontsize=10)
 ax.set_ylabel('Queue length(# of packets)', fontsize=10)
-ax.set_title(r'(c) ECN$^\sharp$', fontsize=11, fontweight='bold')
+ax.set_title(r'(b) CoDel', fontsize=11, fontweight='bold')
 
 ax.xaxis.set_major_locator(ticker.MultipleLocator(0.001))
 ax.xaxis.set_major_formatter(ticker.FormatStrFormatter('%.3f'))

@@ -58,7 +58,7 @@ We selected several of the most importants results to replicate. Below we introd
 The first result we chose to replicate is the core dilemma the paper discusses: instantaneous marking cannot achieve both low latency and high throughput simultaneously. This figure is before the authors introduce ECN#, and it sort of sets the stage for why we need to add an additional mechanism for marking persistent flows. We found this result interesting since it's the entire motivation behind the paper. It demonstrates on a normalized graph and on a real testbed (not simulated) that as the marking threshold increases (i.e., the size of the queue in kilobytes above which we instantaneously mark packets with the congestion flag on), we see that throughput gradually declines, thus throughput increases while the short flows, i.e., 99th percentile short flow, become increasingly penalized and thus latency increases too. Specifically, when we increase the marking threshold from 50KB to 250KB, the short flows suffer from 119.2% increased flow completion time (581μs to 265μs) despite throughput increasing, for instance, by 8% when we increase the marking threshold to 100KB. The core conclusion is that high throughput is a direct trade-off because it comes with high latency. This is precisely what ECN# attempts to solve.
 
 <center>
-  <div style="display:inline-block; width:30%; padding-left: 1em">
+  <div style="display:inline-block; width:50%; padding-left: 1em">
     <img
       alt="Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
       src="figures/Original-Fig2.png"
@@ -69,6 +69,23 @@ ing cannot achieve high throughput and
 low latency simultaneously.</p>
   </div>
 </center>
+
+### Recreating the experiments on the queue occupancy
+
+Section 5.4.1 of the paper introduces the experiment performed to measure and compare the queue occupancy of the different schemes. The results are presented in the Figure 16 of the paper:
+
+
+<center>
+  <div style="display:inline-block; width:90%; padding-left: 1em">
+    <img
+      src="figures/Original-Fig16.png"
+      style="width:100%"
+      />
+    <!-- <p>Figure 16.</p> -->
+  </div>
+</center>
+
+The experiments measure the queue link of the bottleneck link for the 0.005 seconds duration starting at 4s mark with 100 concurrent flows happening, and a burst targetted at around 4s mark. The results show that the ECN# keep lower queue occupancy (8 packets) compared to DCTCP-RED-Tail (182 packets). What is more, ECN# achieves comparable results in handling bursty traffic when compared to DCTCP-RED-Tail and CoDel. ECN# has not dropped any packets, while CoDel dropped 125 packets during the burst.
 
 # 3. Environment Setup
 First, we introduce the common environment set up for all experiments. After, we introduce additional details for the environment setup for each recreated figure. 
@@ -85,7 +102,7 @@ docker run -it snowzjx/ns3-ecn-sharp:optimized
 # once inside, navigate to the code repo
 cd ~/ns3-ecn-sharp
 
-# we configure the project either to debug mode with -d debig or to optimized mode:
+# we configure the project either to debug mode with -d debug or to optimized mode:
 ./waf -d optimized --enable-examples configure
 
 # then we compile the NS3 simulator
@@ -137,6 +154,13 @@ We also used web search workloads using the DcTCP CFD file based on [1] (same as
 We used TCN in the simulator for instantaneous marking, but this took as a parameter the sojourn time rather than a threshold in KB representing the size of the queue. To convert this, we used an assumption that we can use the link speed (set to 10Gbps) to convert these numbers (first bit to byte, then from giga to kilo), and thus we obtained the following mapping from the threshold in KB to the threshold in μs: 
 
 But these again were difficult to emulate, and we discovered after lots of trial and error that the culprit was the simulation time. We had to increase it from the default 0.5 seconds to 4 seconds, with new flows stopping at 3 seconds. This made the simulation basically fry our laptops, so we ended up writing a Slurm script, using Apptainer to launch their Docker container, and running the simulation on the Galileo 100 cluster, which we coincidentally had access to thanks to another course. The Slurm script is provided in our repository under the `fig2` folder, together with all the used files for this experiment to ensure full reproducibility of our methodology.
+
+### Recreating experiments on the queue occupancy
+
+The results on the queue occupancy correspond to Section 5.4.1 and Figure 16 in the paper.
+
+The code provided by authors includes the executable `queue-track` to be ran for this experiment. The code creates all the required setup: the background flows are installed and incast flows, consistent with "100 concurrent query flows" description. However, not all values are the same in paper as in the code's default values. To be more precise, the `bufferSize` seems to be 600 based on the plot rather than 100 which is the default value. The code also expects `endTime` and `simulationEndTime` which are not described in the paper. Knowing that we want to have the burst in the timespan between 4.000 seconds and 4.005 seconds, the good values turned out to be `endTime=4.5` and `simulationEndTime=5.0`, as these produce a burst around the 4s mark. The thresholds were also not described, so we have chosen them to what seemed a reasonable choise and representative to the results in the paper. The actual values used are mentioned below in Section 4. Experiment Result.
+
 
 # 4. Experiment Result
 
@@ -220,6 +244,76 @@ Running the `job.sh` scripts provided in our repository under the `fig2` folder 
   </div>
 </center>
 Although there is a clear difference between the replicated Figure 2 and the paper's original, this stems from the topology difference, and ours is simulated while theirs is on a real testbed. Nonetheless, we actually derive a similar overall trend: the 99th percentile is heavily penalized as we increase the marking threshold. The most shocking difference was that no matter how we configured our experiment, we could not get the average FCT to decrease as the marking threshold increased, i.e., higher throughput. In our results, it always gradually increased. We thought about this a lot and concluded it must be because our topology is less congested since we have more routes than the original testbed, and therefore, we do not see a throughput increase with a higher threshold, as there is not a single simple bottleneck as in the original paper. Nonetheless, our conclusion remains the same: ECN penalizes latency as we increase the threshold. 
+
+### Recreating the experiment on the queue occupancy
+
+To run the experiment, the `queue-track` tool was ran with the following configurations, each for different scheme:
+
+```bash
+# ECN#
+./waf --run "queue-track \
+  --id=test \
+  --AQM=ECNSharp \
+  --transportProt=DcTcp \
+  --numOfSenders=100 \
+  --bufferSize=600 \
+  --endTime=4.5 \
+  --simEndTime=5.0 \
+  --ECNSharpInterval=150 \
+  --ECNSharpTarget=10 \
+  --ECNSharpMarkingThreshold=20 \
+  --load=0.9 \
+  --flowNum=1000"
+
+# CoDel
+./waf --run "queue-track \
+  --id=test \
+  --AQM=CODEL \
+  --transportProt=DcTcp \
+  --numOfSenders=100 \
+  --bufferSize=600 \
+  --CODELInterval=150 \
+  --CODELTarget=10 \
+  --endTime=4.5 \
+  --simEndTime=5.0 \
+  --load=0.9 \
+  --flowNum=1000"
+
+# DCTCP-RED-Tail
+./waf --run "queue-track \
+  --id=test \
+  --AQM=RED \
+  --transportProt=DcTcp \
+  --numOfSenders=100 \
+  --bufferSize=600 \
+  --REDMarkingThreshold=40 \
+  --endTime=4.5 \
+  --simEndTime=5.0 \
+  --load=0.9 \
+  --flowNum=1000"
+```
+
+The results are as presented in the figure below:
+
+<center>
+  <div style="display:inline-block; width:90%; padding-left: 1em">
+    <img
+      src="figures/Recreated-Fig16a.png"
+      style="width:30%"
+      />
+    <img
+      src="figures/Recreated-Fig16b.png"
+      style="width:30%"
+      />
+    <img
+      src="figures/Recreated-Fig16c.png"
+      style="width:30%"
+      />
+    <p>Figure: Our reproduction of Figure 16. The experiment measured the queue occupancy during different schemes in a short window of 0.005 seconds during a flow burst.</p>
+  </div>
+</center>
+
+The exact lines and values are not neccesarily same as in the paper, possibly due to small differences in the configuration. However, the patterns are still clear and match the results from the paper. DCTCP-RED-Tail reaches the maximum queue occupancy of 416 packets, CoDel reaches the buffer limit of 600 packets, while ECN# reaches only 318 packets. This replicates the results that no packets are dropped when handling burst with ECN#. However, one inconsistency is that in the paper DCTCP-RED-Tail obtains the queue occupancy of 182 packets overall, while in our experiment it gets lower and close to zero after the burst. This can be explained in the possible difference of the simulation time configuration or the difference in the burst or background traffic generation, which is not fully explained in the paper.
 
 
 # 5. Further Exploration
@@ -359,14 +453,14 @@ Conclude the report by mentioning the takeaways of experiments you did
 
 ---
 
-# Appendix
+<!-- # Appendix
 
 You are asked to write this report using Markdown. You can find a cheat sheet
 of Markdown syntax at this [link](https://rust-lang.github.io/mdBook/format/markdown.html).
 
 For generating a PDF file from your report you can use a tool of your choice.
 *md2pdf* is one such tool. See this [link](https://pypi.org/project/md2pdf/)
-for more information about it. You can also use an online editor such as [this](https://www.md2pdf.io/).
+for more information about it. You can also use an online editor such as [this](https://www.md2pdf.io/). -->
 
 [1] Mohammad Alizadeh, Albert Greenberg, David A. Maltz, Jitendra Padhye,
 Parveen Patel, Balaji Prabhakar, Sudipta Sengupta, and Murari Sridharan. 2010.
