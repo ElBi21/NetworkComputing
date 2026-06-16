@@ -1,9 +1,0 @@
-FROM gcc:4.9
-
-RUN mkdir -p /opt/ecn
-WORKDIR /opt/ecn
-
-COPY ecn-sharp /opt/ecn
-
-RUN ./waf -d optimized --enable-examples configure
-RUN ./waf

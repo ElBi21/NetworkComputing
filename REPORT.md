@@ -3,7 +3,7 @@
 **Team Members:**  
 Stanisław Ostyk-Narbutt (stanislaw.ostyknarbutt@mail.polimi.it);
 Aldas Lenkšas (aldas.lenksas@mail.polimi.it);  
-Leonardo Biason (leonardo.biason@mail.polimi.it)
+FirstName LastName3 (email address)
 
 ---
 
@@ -34,7 +34,7 @@ The base RTT (round-trip time) consists of transmission delay, propagation delay
 
 Authors have proposed a new solution that they named ECN#. It is based on the instantaneous ECN marking with an addition of marking packets when a persistent switch queue buildup is observed. This lightweight solution is able to handle bursts, maintain high throughput and eliminates unnecessary queueing delay. In order to detect the persistent queue buildup, the sojourn time (time in the queue for each packet) is measured and compared to the threshold. The marking is made conservatively, meaning that ECN# marks one packet in the interval, while only reducing threshold if the sojourn times continuously exceed the threshold.
 
-The experiments were done in a small but representative testbed, as well as with a larger scale leaf-spine topology network setup simulated in NS3. As shown in the paper, ECN# achieves smaller average FCT (Flow Completion Time) for small flows while achieving a similar FCT for larger flows (Section 5.2 of the paper). Moreover, the proposed method keeps a lower queue occupancy compared to the other common practices (Section 5.4.1 of the paper).
+The experiments were done in a small but representable testbed, as well as with a larger scale network setup simulated in NS3. As shown in the paper, ECN# achieves smaller average FCT (Flow Completion Time) for small flows while achieving a similar FCT for larger flows (Section 5.2 of the paper). Moreover, the proposed method keeps a lower queue occupancy compared to the other common practices (Section 5.4.1 of the paper).
 
 # 2. Selected Result
 
@@ -55,7 +55,6 @@ For example:
 We selected several of the most importants results to replicate. Below we introduce each result in its own subsection.
 
 ### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
-
 The first result we chose to replicate is the core dilemma the paper discusses: instantaneous marking cannot achieve both low latency and high throughput simultaneously. This figure is before the authors introduce ECN#, and it sort of sets the stage for why we need to add an additional mechanism for marking persistent flows. We found this result interesting since it's the entire motivation behind the paper. It demonstrates on a normalized graph and on a real testbed (not simulated) that as the marking threshold increases (i.e., the size of the queue in kilobytes above which we instantaneously mark packets with the congestion flag on), we see that throughput gradually declines, thus throughput increases while the short flows, i.e., 99th percentile short flow, become increasingly penalized and thus latency increases too. Specifically, when we increase the marking threshold from 50KB to 250KB, the short flows suffer from 119.2% increased flow completion time (581μs to 265μs) despite throughput increasing, for instance, by 8% when we increase the marking threshold to 100KB. The core conclusion is that high throughput is a direct trade-off because it comes with high latency. This is precisely what ECN# attempts to solve.
 
 <center>
@@ -63,13 +62,15 @@ The first result we chose to replicate is the core dilemma the paper discusses: 
     <img
       alt="Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
       src="figures/Original-Fig2.png"
-      style="width:50%"
+      style="width:100%"
       />
-    <p>Figure 1: Original paper's Figure 2: Instantaneous marking cannot achieve high throughput and low latency simultaneously.</p>
+    <p>Figure 1: Original paper's Figure 2: Instantaneous mark-
+ing cannot achieve high throughput and
+low latency simultaneously.</p>
   </div>
 </center>
 
-### Recreating the experiments on the queue occupancy (Figure 16)
+### Recreating the experiments on the queue occupancy
 
 Section 5.4.1 of the paper introduces the experiment performed to measure and compare the queue occupancy of the different schemes. The results are presented in the Figure 16 of the paper:
 
@@ -84,40 +85,7 @@ Section 5.4.1 of the paper introduces the experiment performed to measure and co
   </div>
 </center>
 
-The experiments measure the queue link of the bottleneck link for the 0.005 seconds duration starting at 4s mark with 100 concurrent flows happening, and a burst targeted at around the 4s mark. The results show that ECN# maintains lower queue occupancy (8 packets) compared to DCTCP-RED-Tail (182 packets). Moreover, ECN# achieves comparable results in handling bursty traffic when compared to DCTCP-RED-Tail and CoDel. ECN# has not dropped any packets, while CoDel dropped 125 packets during the burst.
-
-### Recreating the experiments on bursty flows with different sender size (Figure 17)
-
-Section 5.4.1 of the paper presents a second experiment in which the number of concurrent query senders is changed from 25 to 200, and the query completion time is traced. The results are then shown in the Figure 17 of the paper:
-
-
-<center>
-  <div style="display:inline-block; width:50%; padding-left: 1em">
-    <img
-      src="figures/Original-Fig17.png"
-      style="width:80%"
-      />
-    <!-- <p>Figure 16.</p> -->
-  </div>
-</center>
-
-The CoDel experiences an FCT degradation once there are more than 100 concurrent senders, while ECN# keeps a similar performance to DCTCP-RED-Tail. Thus, ECN# is a good choice for control over a bursty traffic.
-
-### Recreating the experiments with packer schedulers (Figure 20)
-
-Section 5.4.3 compares ECN# with TCN in order to show how ECN# works with arbitrary packet scheduler. The switch is configured to Deficit Weighted Round Robin (DWRR) with 3 queues and their weights with the ratio 2 : 1 : 1. From each of the sender a long-lived TCP flow is created and classified into the corresponding queue. The rest of the senders randomly start short flows. The results are presented in the following figure:
-
-<center>
-  <div style="display:inline-block; width:50%; padding-left: 1em">
-    <img
-      src="figures/Original-Fig20.png"
-      style="width:80%"
-      />
-    <!-- <p>Figure 16.</p> -->
-  </div>
-</center>
-
-The paper observes that at the beginning only the queue 1 is active with the goodput achieved of 9.6 Gbps per second. Once flow 2 starts, queue 2 also becomes active and flow 1 achieves 6.42 Gbps goodput. Finally, when all three flows are started, the achieved goodputs per flows are 4.82Gbps,  2.40Gbps, and 2.40Gbps. The short flow FCT among all queues is also measured and presented in the Figure 20b. The results in the paper mention that ECN# achieves 19.6% better average FCT for short flows than TCN.
+The experiments measure the queue link of the bottleneck link for the 0.005 seconds duration starting at 4s mark with 100 concurrent flows happening, and a burst targetted at around 4s mark. The results show that the ECN# keep lower queue occupancy (8 packets) compared to DCTCP-RED-Tail (182 packets). What is more, ECN# achieves comparable results in handling bursty traffic when compared to DCTCP-RED-Tail and CoDel. ECN# has not dropped any packets, while CoDel dropped 125 packets during the burst.
 
 # 3. Environment Setup
 First, we introduce the common environment set up for all experiments. After, we introduce additional details for the environment setup for each recreated figure. 
@@ -173,6 +141,7 @@ If something was **missing in the original paper**, state it. For example:
 > The paper does not specify X. We assumed Y (or explored range *a* to *b*). -->
 
 ### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
+
 The authors conducted the experiment of Figure 2 on a real-life testbed. They have 8 hosts connected with 10 Gbps Ethernet adapters and a Mellanox SN2100 switch. With a link speed of 10Gbps, a load of 50%, and $3\times$ RTT variations (i.e., they vary from 70μs to 210μs), and from what we understand, they continue to use the same web workload using their previous experiment's Apache web server and `ApacheBench` for generating 3000 HTTP requests. 
 
 
@@ -185,30 +154,12 @@ We used TCN in the simulator for instantaneous marking, but this took as a param
 
 But these again were difficult to emulate, and we discovered after lots of trial and error that the culprit was the simulation time. We had to increase it from the default 0.5 seconds to 4 seconds, with new flows stopping at 3 seconds. This made the simulation basically fry our laptops, so we ended up writing a Slurm script, using Apptainer to launch their Docker container, and running the simulation on the Galileo 100 cluster, which we coincidentally had access to thanks to another course. The Slurm script is provided in our repository under the `fig2` folder, together with all the used files for this experiment to ensure full reproducibility of our methodology.
 
-### Recreating experiments on the queue occupancy (Figure 16)
+### Recreating experiments on the queue occupancy
 
 The results on the queue occupancy correspond to Section 5.4.1 and Figure 16 in the paper.
 
 The code provided by authors includes the executable `queue-track` to be ran for this experiment. The code creates all the required setup: the background flows are installed and incast flows, consistent with "100 concurrent query flows" description. However, not all values are the same in paper as in the code's default values. To be more precise, the `bufferSize` seems to be 600 based on the plot rather than 100 which is the default value. The code also expects `endTime` and `simulationEndTime` which are not described in the paper. Knowing that we want to have the burst in the timespan between 4.000 seconds and 4.005 seconds, the good values turned out to be `endTime=4.5` and `simulationEndTime=5.0`, as these produce a burst around the 4s mark. The thresholds were also not described, so we have chosen them to what seemed a reasonable choise and representative to the results in the paper. The actual values used are mentioned below in Section 4. Experiment Result.
 
-### Recreating the experiments on bursty flows with different sender size (Figure 17)
-
-This corresponds to Section 5.4.1 and Figure 17 of the paper. 
-
-As barely any details are presented in the paper, we had to assume that mostly the default values of the `queue-track` are used. The important value to change is the number of concurrent senders, which is changed from 25 to 200 in the steps of 25, as can be seen in the Figure 17 of the paper.
-
-
-### Recreating the experiments with packer schedulers (Figure 20)
-
-This corresponds to Section 5.4.3 of the paper. We have used the multiqueue executable `mq` to run the experiments, as the defautl setup highly corresponds with the experiment description in the paper. Most importantly, the three queues are started and the weights are given with the ratio 2:1:1, as can be seen in the following snippet:
-
-```C++
-    dwrrQdisc->AddDWRRClass (queueDisc1, 0, 3000);
-    dwrrQdisc->AddDWRRClass (queueDisc2, 1, 1500);
-    dwrrQdisc->AddDWRRClass (queueDisc3, 2, 1500);
-```
-
-The other values have been left as the default ones.
 
 # 4. Experiment Result
 
@@ -286,14 +237,14 @@ Running the `job.sh` scripts provided in our repository under the `fig2` folder 
     <img
       alt="Figure 3: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
       src="figures/Recreated-Fig2.png"
-      style="width:80%"
+      style="width:100%"
       />
     <p>Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup</p>
   </div>
 </center>
 Although there is a clear difference between the replicated Figure 2 and the paper's original, this stems from the topology difference, and ours is simulated while theirs is on a real testbed. Nonetheless, we actually derive a similar overall trend: the 99th percentile is heavily penalized as we increase the marking threshold. The most shocking difference was that no matter how we configured our experiment, we could not get the average FCT to decrease as the marking threshold increased, i.e., higher throughput. In our results, it always gradually increased. We thought about this a lot and concluded it must be because our topology is less congested since we have more routes than the original testbed, and therefore, we do not see a throughput increase with a higher threshold, as there is not a single simple bottleneck as in the original paper. Nonetheless, our conclusion remains the same: ECN penalizes latency as we increase the threshold. 
 
-### Recreating the experiment on the queue occupancy (Figure 16)
+### Recreating the experiment on the queue occupancy
 
 To run the experiment, the `queue-track` tool was ran with the following configurations, each for different scheme:
 
@@ -362,47 +313,6 @@ The results are as presented in the figure below:
 </center>
 
 The exact lines and values are not neccesarily same as in the paper, possibly due to small differences in the configuration. However, the patterns are still clear and match the results from the paper. DCTCP-RED-Tail reaches the maximum queue occupancy of 416 packets, CoDel reaches the buffer limit of 600 packets, while ECN# reaches only 318 packets. This replicates the results that no packets are dropped when handling burst with ECN#. However, one inconsistency is that in the paper DCTCP-RED-Tail obtains the queue occupancy of 182 packets overall, while in our experiment it gets lower and close to zero after the burst. This can be explained in the possible difference of the simulation time configuration or the difference in the burst or background traffic generation, which is not fully explained in the paper.
-
-### Recreating the experiments on bursty flows with different sender size (Figure 17)
-
-`queue-track` was used as the main tool. The bash script that was used to sweep over the different schemes and different number of the concurrent senders is present in `ecnsharp-fig-17/run_fct_sweep.sh`. The resulting graph is as follows:
-
-
-<center>
-  <div style="display:inline-block; width:50%; padding-left: 1em">
-    <img
-      src="figures/Recreated-Fig17.png"
-      style="width:100%"
-      />
-    <p>Figure: Our reproduction of Figure 17. The experiment measured the flow completion time during burst traffic with different number of concurrent senders.</p>
-  </div>
-</center>
-
-As it can be seen, our reproduced results are totally different. The average FCT seems to be rather similar for all schemes, while 99th percentile obtains a jump at the beginning  and then proceeds to increase similarly for all schemes.
-
-There are several reasons for that, all arrising from a possible mismatch in the configuration, as the details are not presented in the paper. When running the simulation, background noise traffic has been generated and the overall simulation end time was set to 5s, while the actual experiment could have been run with completely different values. Moreover, the thresholds (RED marking threshold, ECN# marking threshold, etc.) were used as the default ones from the code, while there is a chance that the authors have used a different setup values. Lastly, the shape of the 99th percentile results that we have obtained indicates a clear issue, arrising either from the inclusion of the background flows or from the fact that authors might have run the simulation several times with different seeds and averaged the results. We have run our experiment only once, as already running it for a short simulation period over all possible combinations for one plot took more than 4 hours.
-
-To conclude, we suspect that the results for this figure could not be reproduced easily by the lack of the experiment configuration details in the paper and the computation constraints on our side.
-
-### Recreating the experiments with packer schedulers (Figure 20)
-
-After running the experiment with `mq` executable and parsing the results, the following results have been achieved:
-
-<center>
-  <div style="display:inline-block; width:80%; padding-left: 1em">
-    <img
-      src="figures/Recreated-Fig20a.png"
-      style="width:45%"
-      />
-    <img
-      src="figures/Recreated-Fig20b.png"
-      style="width:45%"
-      />
-    <p>Figure: Our reproduction of Figure 20. The experiment measured and compared ECN# with TCN when using an arbitrary packet scheduler.</p>
-  </div>
-</center>
-
-The results match the ones from the paper. To be more precise, the flow throughputs match the Figure 20a, and the FCT of short flows get a similar cummulative distribution function as in the paper. The only caveat is that the paper measure goodput, whereas in our experiment we have used throughput to plot. However, goodput is just only slightly smaller, and the trend would be very similar. Because of this, we have decided to stick with the throughput for our calculations for simplicity.
 
 ### Recreating the simulation on Leaf-Spine topology
 
