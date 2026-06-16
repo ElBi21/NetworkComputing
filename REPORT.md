@@ -314,38 +314,6 @@ The results are as presented in the figure below:
 
 The exact lines and values are not neccesarily same as in the paper, possibly due to small differences in the configuration. However, the patterns are still clear and match the results from the paper. DCTCP-RED-Tail reaches the maximum queue occupancy of 416 packets, CoDel reaches the buffer limit of 600 packets, while ECN# reaches only 318 packets. This replicates the results that no packets are dropped when handling burst with ECN#. However, one inconsistency is that in the paper DCTCP-RED-Tail obtains the queue occupancy of 182 packets overall, while in our experiment it gets lower and close to zero after the burst. This can be explained in the possible difference of the simulation time configuration or the difference in the burst or background traffic generation, which is not fully explained in the paper.
 
-### Recreating the simulation on Leaf-Spine topology
-
-In order to prove the efficiency of ECN#, the authors of the paper simulated two different kinds of workloads and subjected ECN# to it. Specifically, the simulations were carried out in two different settings: a *testbed* and a *large scale* setting. We will focus on the reproduction of the simulations under the large scale setting only, as it was the only one reproducible through a simulator. The two workloads proposed by the authors are called **web search** and **data mining**: the first is characterized by small, bursty flows, while the second is mainly composed of long and steady flows.
-
-As per the original paper, the topology is based on the Leaf-Spine model, and in our case it counts 8 spine switches, 8 leaf switches and 128 total servers (16 per leaf switch). In order to run the simulation, we started from the base command provided in the author's repository:
-
-```bash
-./waf --run "large-scale \
-    --randomSeed=233 \
-    --load=[0.2, 0.9] \
-    --ID=LargeScale \
-    --AQM=[TCN|ECNSharp] \
-    --ECNShaprInterval=70 \
-    --ECNSharpTarget=10 \
-    --ECNShaprMarkingThreshold=70"
-```
-
-The comparison focuses explicitely on the performances of ECN# in contrast to the ones of DCTCP-RED, hence the reason why the authors reported the normalized FCT in the plots. The original results achieved by the authors can be observed in Figures 13 and 14 in the original paper. Here below are shown the results obtained from our simulations:
-
-<center>
-  <div style="display: inline-block; width: 100%">
-    <img
-      alt="Figure 1: FCT results for the web search workload"
-      src="ecnsharp-fig-13-14/figure13_16x8x8.png"
-      style="width: 100%"
-      />
-    <p>Figure NUMXX: FCT results for the web search workload</p>
-  </div>
-</center>
-
-With respect to the original measurements
-
 # 5. Further Exploration
 <!-- 
 In this project you are required to also explore a research question of your own. Either:
