@@ -34,7 +34,7 @@ The base RTT (round-trip time) consists of transmission delay, propagation delay
 
 Authors have proposed a new solution that they named ECN#. It is based on the instantaneous ECN marking with an addition of marking packets when a persistent switch queue buildup is observed. This lightweight solution is able to handle bursts, maintain high throughput and eliminates unnecessary queueing delay. In order to detect the persistent queue buildup, the sojourn time (time in the queue for each packet) is measured and compared to the threshold. The marking is made conservatively, meaning that ECN# marks one packet in the interval, while only reducing threshold if the sojourn times continuously exceed the threshold.
 
-The experiments were done in a small but representable testbed, as well as with a larger scale network setup simulated in NS3. As shown in the paper, ECN# achieves smaller average FCT (Flow Completion Time) for small flows while achieving a similar FCT for larger flows (Section 5.2 of the paper). Moreover, the proposed method keeps a lower queue occupancy compared to the other common practices (Section 5.4.1 of the paper).
+The experiments were done in a small but representative testbed, as well as with a larger scale leaf-spine topology network setup simulated in NS3. As shown in the paper, ECN# achieves smaller average FCT (Flow Completion Time) for small flows while achieving a similar FCT for larger flows (Section 5.2 of the paper). Moreover, the proposed method keeps a lower queue occupancy compared to the other common practices (Section 5.4.1 of the paper).
 
 # 2. Selected Result
 
@@ -62,11 +62,9 @@ The first result we chose to replicate is the core dilemma the paper discusses: 
     <img
       alt="Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
       src="figures/Original-Fig2.png"
-      style="width:100%"
+      style="width:50%"
       />
-    <p>Figure 1: Original paper's Figure 2: Instantaneous mark-
-ing cannot achieve high throughput and
-low latency simultaneously.</p>
+    <p>Figure 1: Original paper's Figure 2: Instantaneous marking cannot achieve high throughput and low latency simultaneously.</p>
   </div>
 </center>
 
@@ -85,7 +83,7 @@ Section 5.4.1 of the paper introduces the experiment performed to measure and co
   </div>
 </center>
 
-The experiments measure the queue link of the bottleneck link for the 0.005 seconds duration starting at 4s mark with 100 concurrent flows happening, and a burst targetted at around 4s mark. The results show that the ECN# keep lower queue occupancy (8 packets) compared to DCTCP-RED-Tail (182 packets). What is more, ECN# achieves comparable results in handling bursty traffic when compared to DCTCP-RED-Tail and CoDel. ECN# has not dropped any packets, while CoDel dropped 125 packets during the burst.
+The experiments measure the queue link of the bottleneck link for the 0.005 seconds duration starting at 4s mark with 100 concurrent flows happening, and a burst targeted at around the 4s mark. The results show that ECN# maintains lower queue occupancy (8 packets) compared to DCTCP-RED-Tail (182 packets). Moreover, ECN# achieves comparable results in handling bursty traffic when compared to DCTCP-RED-Tail and CoDel. ECN# has not dropped any packets, while CoDel dropped 125 packets during the burst.
 
 ### Recreating the experiments on bursty flows with different sender size (Figure 17)
 
@@ -96,7 +94,7 @@ Section 5.4.1 of the paper presents a second experiment in which the number of c
   <div style="display:inline-block; width:50%; padding-left: 1em">
     <img
       src="figures/Original-Fig17.png"
-      style="width:100%"
+      style="width:80%"
       />
     <!-- <p>Figure 16.</p> -->
   </div>
@@ -112,7 +110,7 @@ Section 5.4.3 compares ECN# with TCN in order to show how ECN# works with arbitr
   <div style="display:inline-block; width:50%; padding-left: 1em">
     <img
       src="figures/Original-Fig20.png"
-      style="width:100%"
+      style="width:80%"
       />
     <!-- <p>Figure 16.</p> -->
   </div>
@@ -141,8 +139,6 @@ cd ~/ns3-ecn-sharp
 # then we compile the NS3 simulator
 ./waf
 ```
-
-### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
 
 <!-- *Note:* This section should contain enough information to allow someone else to
 reproduce *your* report. Share hardware and/or software setup relevant to your
@@ -289,7 +285,7 @@ Running the `job.sh` scripts provided in our repository under the `fig2` folder 
     <img
       alt="Figure 3: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
       src="figures/Recreated-Fig2.png"
-      style="width:100%"
+      style="width:80%"
       />
     <p>Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup</p>
   </div>
