@@ -15,26 +15,20 @@ on emerging Networking EXperiments and Technologies (CoNEXT ’19), December 9�
 https://doi.org/10.1145/3359989.3365426 -->
 
 **Project:**
-All slurm cluster scripts, python plotting files, and modified NS3 topology files are in the following repo:
+All SLURM cluster scripts, Python plotting files, and modified ns-3 topology files are available in the following repo:
 [github.com/ElBi21/NetworkComputing](github.com/ElBi21/NetworkComputing)
 
-It is organized in folders by figure recreated (e.g. `fig2` for Figure 2, etc.) and `fat-tree` contains the new extension we added to the paper.
+The project is organized in folders by figures recreated (e.g. `fig2` for Figure 2, etc.) and `fat-tree`, which contains the new extension we added to the paper.
 
 ---
 
 # 1. Introduction
 
-<!-- Introduce the paper by summarizing:
+The base RTT (round-trip time) consists of transmission delay, propagation delay, and processing delay. As the first two are rather negligible inside datacenters, processing delay is the main contribution to RTT, which makes it vary significantly as flows traverse different components. ECN has been used in datacenters to deliver high throughput low latency communications. Having assumed a fixed RTT value, ECN performs an **instantaneous marking** based on such a value, but in practice, as shown in the paper, this leads to **performance degradation**: indeed, taking a low-percentile RTT value can result in throughput degradation, while a high-percentile RTT value can instead lead to an increased latency.
 
-- The problem the paper addresses and its importance
-- The key ideas behind its solution and its approach
-- The main contributions -->
+The authors of the paper have proposed a new solution that they named ECN#: it is based on the instantaneous ECN marking mechanism with the addition of marking packets when a persistent switch queue buildup is observed. This lightweight solution is able to handle bursts, maintain high throughput and eliminates unnecessary queueing delay. In order to detect the persistent queue buildup, the **sojourn time** (time in the queue for each packet) is measured and compared to the threshold. The marking is made conservatively, meaning that ECN# marks one packet in the interval, while only reducing threshold if the sojourn times continuously exceed the threshold.
 
-The base RTT (round-trip time) consists of transmission delay, propagation delay, and processing delay. As the first two are rather negligible inside datacenters, processing delay is the main contribution to the RTT, which makes it vary significantly, as flows traverse different components. ECN has been used in datacenters to deliver high throughput low latency communications. Having assumed a fixed RTT value, ECN performs an instantaneous marking based on such a value. In practice, as shown in the paper, this leads to performance degradation. Taking a low-percentile RTT value results in throughput degradation, while a high-percentile RTT value can lead to an increased latency.
-
-Authors have proposed a new solution that they named ECN#. It is based on the instantaneous ECN marking with an addition of marking packets when a persistent switch queue buildup is observed. This lightweight solution is able to handle bursts, maintain high throughput and eliminates unnecessary queueing delay. In order to detect the persistent queue buildup, the sojourn time (time in the queue for each packet) is measured and compared to the threshold. The marking is made conservatively, meaning that ECN# marks one packet in the interval, while only reducing threshold if the sojourn times continuously exceed the threshold.
-
-The experiments were done in a small but representative testbed, as well as with a larger scale leaf-spine topology network setup simulated in NS3. As shown in the paper, ECN# achieves smaller average FCT (Flow Completion Time) for small flows while achieving a similar FCT for larger flows (Section 5.2 of the paper). Moreover, the proposed method keeps a lower queue occupancy compared to the other common practices (Section 5.4.1 of the paper).
+The experiments to test the effectiveness of ECN# were conducted in a small but representative testbed, as well as with a larger scale leaf-spine topology network setup simulated in ns-3. As shown in the paper, ECN# achieves not only smaller average **Flow Completion Time** (FCT) for small flows, but it can also obtain a FCT similar to ECN's one for larger flows (Section 5.2 of the paper). Moreover, the proposed method keeps a lower queue occupancy compared to the other common practices (Section 5.4.1 of the paper).
 
 # 2. Selected Result
 
@@ -52,27 +46,42 @@ For example:
     />
   <p>Figure 1: The figure shows that method A improves throughput compared to method B</p>
 </center> -->
+
 We selected several of the most importants results to replicate. Below we introduce each result in its own subsection.
 
 ### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
 
-The first result we chose to replicate is the core dilemma the paper discusses: instantaneous marking cannot achieve both low latency and high throughput simultaneously. This figure is before the authors introduce ECN#, and it sort of sets the stage for why we need to add an additional mechanism for marking persistent flows. We found this result interesting since it's the entire motivation behind the paper. It demonstrates on a normalized graph and on a real testbed (not simulated) that as the marking threshold increases (i.e., the size of the queue in kilobytes above which we instantaneously mark packets with the congestion flag on), we see that throughput gradually declines, thus throughput increases while the short flows, i.e., 99th percentile short flow, become increasingly penalized and thus latency increases too. Specifically, when we increase the marking threshold from 50KB to 250KB, the short flows suffer from 119.2% increased flow completion time (581μs to 265μs) despite throughput increasing, for instance, by 8% when we increase the marking threshold to 100KB. The core conclusion is that high throughput is a direct trade-off because it comes with high latency. This is precisely what ECN# attempts to solve.
+The first result we chose to replicate is the core dilemma the paper discusses: instantaneous marking cannot achieve both low latency and high throughput simultaneously. This figure is shown before the authors introduce ECN#, and it sets the stage for why we need to add an additional mechanism for marking persistent flows. We found this result interesting since it's the entire motivation behind the paper. It demonstrates on a normalized graph and on a real testbed (not simulated) that as the marking threshold increases (i.e., the size of the queue in kilobytes above which we instantaneously mark packets with the congestion flag on), then throughput gradually increases; however, when throughput increases then the short flows (i.e., 99th percentile short flow) will become increasingly penalized, and latency will thus increase.
+
+Specifically, if we increase the marking threshold from 50KB to 250KB, then the short flows would suffer from 119.2% increased flow completion time (581μs to 265μs) despite throughput having increased, for instance, by 8% just by increasing the marking threshold to 100KB. The core conclusion is that high throughput is a direct trade-off because it comes with high latency. This is precisely what ECN# attempts to solve.
 
 <center>
   <div style="display:inline-block; width:50%; padding-left: 1em">
     <img
-      alt="Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
+      alt="Figure 1: Our reproduction of Figure 2 on the simulated ns-3 large-scale setup"
       src="figures/Original-Fig2.png"
-      style="width:50%"
+      style="width:90%"
       />
     <p>Figure 1: Original paper's Figure 2: Instantaneous marking cannot achieve high throughput and low latency simultaneously.</p>
   </div>
 </center>
 
+### Recreating the simulation on Leaf-Spine topology (Figures 13 and 14)
+
+Section 5.3 proposes two simulation experiments that aim to measure the performance of ECN# against the one of DCTCP-RED. Each experiment focuses on a different network workload, while still keeping the same simulated topology. The results achieved by the authors can be found in Figures 13 and 14 in the paper (which are here reported):
+
+<center>
+  <div style="display:inline-block; width:90%; padding-left: 1em">
+    <img
+      src="figures/Original-Fig13-14.png"
+      style="width:100%"
+      />
+  </div>
+</center>
+
 ### Recreating the experiments on the queue occupancy (Figure 16)
 
-Section 5.4.1 of the paper introduces the experiment performed to measure and compare the queue occupancy of the different schemes. The results are presented in the Figure 16 of the paper:
-
+Section 5.4.1 of the paper introduces an experiment performed to measure and compare the queue occupancy of the different schemes. The results are presented in the Figure 16 of the paper:
 
 <center>
   <div style="display:inline-block; width:90%; padding-left: 1em">
@@ -80,7 +89,6 @@ Section 5.4.1 of the paper introduces the experiment performed to measure and co
       src="figures/Original-Fig16.png"
       style="width:100%"
       />
-    <!-- <p>Figure 16.</p> -->
   </div>
 </center>
 
@@ -88,16 +96,14 @@ The experiments measure the queue link of the bottleneck link for the 0.005 seco
 
 ### Recreating the experiments on bursty flows with different sender size (Figure 17)
 
-Section 5.4.1 of the paper presents a second experiment in which the number of concurrent query senders is changed from 25 to 200, and the query completion time is traced. The results are then shown in the Figure 17 of the paper:
-
+Section 5.4.1 of the paper presents also a second experiment in which the number of concurrent query senders is changed from 25 to 200, and the query completion time is traced. The results are shown in the Figure 17 of the paper:
 
 <center>
-  <div style="display:inline-block; width:50%; padding-left: 1em">
+  <div style="display:inline-block; width:90%; padding-left: 1em">
     <img
       src="figures/Original-Fig17.png"
-      style="width:80%"
+      style="width:100%"
       />
-    <!-- <p>Figure 16.</p> -->
   </div>
 </center>
 
@@ -105,39 +111,40 @@ The CoDel experiences an FCT degradation once there are more than 100 concurrent
 
 ### Recreating the experiments with packer schedulers (Figure 20)
 
-Section 5.4.3 compares ECN# with TCN in order to show how ECN# works with arbitrary packet scheduler. The switch is configured to Deficit Weighted Round Robin (DWRR) with 3 queues and their weights with the ratio 2 : 1 : 1. From each of the sender a long-lived TCP flow is created and classified into the corresponding queue. The rest of the senders randomly start short flows. The results are presented in the following figure:
+Section 5.4.3 compares ECN# with TCN in order to show how ECN# works with arbitrary packet scheduler. The switch is configured to Deficit Weighted Round Robin (DWRR) with 3 queues and their weights following the ratio 2 : 1 : 1. From each of the sender a long-lived TCP flow is created and classified into the corresponding queue, while the rest of the senders randomly start short flows. The results are presented in the following figure:
 
 <center>
-  <div style="display:inline-block; width:50%; padding-left: 1em">
+  <div style="display:inline-block; width:90%; padding-left: 1em">
     <img
       src="figures/Original-Fig20.png"
-      style="width:80%"
+      style="width:100%"
       />
-    <!-- <p>Figure 16.</p> -->
   </div>
 </center>
 
-The paper observes that at the beginning only the queue 1 is active with the goodput achieved of 9.6 Gbps per second. Once flow 2 starts, queue 2 also becomes active and flow 1 achieves 6.42 Gbps goodput. Finally, when all three flows are started, the achieved goodputs per flows are 4.82Gbps,  2.40Gbps, and 2.40Gbps. The short flow FCT among all queues is also measured and presented in the Figure 20b. The results in the paper mention that ECN# achieves 19.6% better average FCT for short flows than TCN.
+The paper observes that at the beginning only the queue 1 is active with the goodput achieved of 9.6 Gbps per second. Once flow 2 starts, queue 2 also becomes active and flow 1 achieves 6.42 Gbps goodput. Finally, when all three flows are started, the achieved goodputs per flows are 4.82Gbps, 2.40Gbps and 2.40Gbps. The short flow FCT among all queues is also measured and presented in the Figure 20b. The results in the paper mention that ECN# achieves 19.6% better average FCT for short flows than TCN.
 
 # 3. Environment Setup
-First, we introduce the common environment set up for all experiments. After, we introduce additional details for the environment setup for each recreated figure. 
+
+First, we introduce the common environment setup for all experiments; after, we will introduce additional details for the environment setup for each recreated figure. 
 
 ### Common Environment Setup
-We used the provided NS3 simulation code from the repository of the authors at [https://github.com/snowzjx/ns3-ecn-sharp/tree/master](https://github.com/snowzjx/ns3-ecn-sharp/tree/master). 
 
-Specifically, we use their preconfigured docker image for simplicity. Following the authors' README, these are the exact commands to recreate the setup:
+We used the provided ns-3 simulation code from the repository of the authors at [https://github.com/snowzjx/ns-3-ecn-sharp/tree/master](https://github.com/snowzjx/ns-3-ecn-sharp/tree/master). 
+
+Specifically, we use their preconfigured Docker image for simplicity. Following the authors' README, these are the exact commands to recreate the setup:
 
 ```bash
-# first, pull and run the authors' preconfigured docker container
-docker run -it snowzjx/ns3-ecn-sharp:optimized
+# First, pull and run the authors' preconfigured Docker container
+docker run -it snowzjx/ns-3-ecn-sharp:optimized
 
-# once inside, navigate to the code repo
-cd ~/ns3-ecn-sharp
+# Once inside, navigate to the code repo
+cd ~/ns-3-ecn-sharp
 
-# we configure the project either to debug mode with -d debug or to optimized mode:
+# We configure the project either to debug mode with -d debug or to optimized mode:
 ./waf -d optimized --enable-examples configure
 
-# then we compile the NS3 simulator
+# Then we compile the ns-3 simulator
 ./waf
 ```
 
@@ -173,17 +180,35 @@ If something was **missing in the original paper**, state it. For example:
 > The paper does not specify X. We assumed Y (or explored range *a* to *b*). -->
 
 ### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
-The authors conducted the experiment of Figure 2 on a real-life testbed. They have 8 hosts connected with 10 Gbps Ethernet adapters and a Mellanox SN2100 switch. With a link speed of 10Gbps, a load of 50%, and $3\times$ RTT variations (i.e., they vary from 70μs to 210μs), and from what we understand, they continue to use the same web workload using their previous experiment's Apache web server and `ApacheBench` for generating 3000 HTTP requests. 
 
+The authors conducted the experiment of Figure 2 on a real-hardware testbed: such testbed consists of 8 hosts connected with 10 Gbps Ethernet adapters and a Mellanox SN2100 switch. The links' speed is 10Gbps, and they generate a continuous load of 50% with $3\times$ RTT variations (i.e., they vary from 70μs to 210μs). Although not clearly stated, the authors used the same web workload using their previous experiment's Apache web server and `ApacheBench` for generating 3000 HTTP requests. 
 
-We noticed a big inconsistency in the paper, which is that all the 'core arguments' for why we need ECN# are based on their physical testbed, which is ultimately a small network, but all their ECN# experimentation is based on a simulated large-scale 128-server leaf-spine network. So we decided to recreate Figure 2 with a twist. We will recreate it using the simulated NS3 leaf-spine topology. However, we still kept as much as possible the same. 
+We noticed a big inconsistency in the paper, which is that all the 'core arguments' for why we need ECN# are based on their physical testbed, which is ultimately a small network, but all their ECN# experimentation is based on a simulated large-scale 128-server leaf-spine network. So we decided to recreate Figure 2 with the simulated ns-3 leaf-spine topology. However, we still kept many of the other settings as much as possible the same. 
 
+We also used web search workloads using the DcTCP CFD file based on [1] (same as the authors in their later experiments). We also used a bottleneck load of 50% by using the predefined `--load` parameter to 0.5 in their ns-3 large-scale topology setup. However, there were still a lot of other parameters we had to fine-tune ourselves: specifically, simulation time (both total simulation time and the time at which new flows stop being generated) and topology configuration (how many spines, leaves, and servers per leaf). We experimented across different topologies, and found that with larger topologies it was much harder to reach a congestive state, and therefore, hard to replicate their results. We had several failed attempts with graphs that demonstrate We ultimately settled on a topology as close to the testbed they used without the classical leaf-spine architecture by effectively using an as-close setup as possible: we used 1 spine, 2 leaves, and 4 servers per leaf, with 10Gbps links between each. Note that this aims to closely emulate their setup of 8 hosts, but it's fundamentally different: the authors used just one switch over for making the hosts communicate, while we used two leaf nodes and a spine, but also 8 total hosts communicating. In these similar yet slightly more complex topologies, we achieved convincing results.
 
-We also used web search workloads using the DcTCP CFD file based on [1] (same as the authors in their later experiments). We also used a bottleneck load of 50% by using the predefined `--load` parameter to 0.5 in their NS3 large-scale topology setup. However, there were still a lot of other parameters we had to fine-tune ourselves. Specifically, simulation time (both total simulation time and the time at which new flows stop being generated) and topology configuration (how many spines, leaves, and servers per leaf). We experimented across different topologies and found that with larger topologies, it was much harder to reach a congestive state, and therefore, hard to replicate their results. We had several failed attempts with graphs that demonstrate absolutely no pattern. This was extremely frustrating, and then we finally settled on a topology as close to the testbed they used without the leaf spine architecture by effectively using an as-close setup as possible: we used 1 spine, 2 leaves, and 4 servers per leaf, with 10Gbps links between each. Note that this somewhat emulates their setup of 8 hosts, but it is fundamentally different: the authors had just one switch over which the hosts communicated, we had two leaf nodes and a spine, but also 8 total hosts communicating. In these similar yet slightly more complex topologies, we were excited to see the results. `(50 100 150 200 250 300)` $\rightarrow$ `(40 80 120 160 200 240)`.
+We used TCN in the simulator for instantaneous marking, but this took as a parameter the sojourn time rather than a threshold in KB representing the size of the queue. To convert this, we used as assumption the fact that we can use the link speed (set to 10Gbps) to convert these numbers (first bit to byte, then from giga to kilo), thus obtaining the following mapping from the threshold in KB to the threshold in μs: `(50 100 150 200 250 300)` $\rightarrow$ `(40 80 120 160 200 240)`.
 
-We used TCN in the simulator for instantaneous marking, but this took as a parameter the sojourn time rather than a threshold in KB representing the size of the queue. To convert this, we used an assumption that we can use the link speed (set to 10Gbps) to convert these numbers (first bit to byte, then from giga to kilo), and thus we obtained the following mapping from the threshold in KB to the threshold in μs: 
+These were however difficult to emulate, but we discovered after many attempts that the difficulty lied in the right tuning of the simulation time. We increased it from the default 0.5 seconds to 4 seconds, with new flows stopping at 3 seconds. This however made the simulations hard to run in local, so we decided to run the simulation on the Galileo100 cluster through Apptainer (as wrapper of Docker). The simulations were launched with a Slurm script, which is provided in our repository under the `fig2` folder, together with all the used files for this experiment to ensure full reproducibility of our methodology.
 
-But these again were difficult to emulate, and we discovered after lots of trial and error that the culprit was the simulation time. We had to increase it from the default 0.5 seconds to 4 seconds, with new flows stopping at 3 seconds. This made the simulation basically fry our laptops, so we ended up writing a Slurm script, using Apptainer to launch their Docker container, and running the simulation on the Galileo 100 cluster, which we coincidentally had access to thanks to another course. The Slurm script is provided in our repository under the `fig2` folder, together with all the used files for this experiment to ensure full reproducibility of our methodology.
+### Recreating experiments on Leaf-Spine topology (Figures 13 and 14)
+
+In order to simulate the Leaf-Spine topology, we used the ns-3 simulator provided by the authors of the paper in their GitHub repository. The simulation can be started with:
+
+```bash
+./waf --run "large-scale \
+    --randomSeed=233 \
+    --load=[0.2, 0.9] \
+    --ID=LargeScale \
+    --AQM=[TCN|ECNSharp] \
+    --ECNShaprInterval=70 \
+    --ECNSharpTarget=10 \
+    --ECNShaprMarkingThreshold=70"
+```
+
+where the parameters that should be changed are the load (which must be a value in the range $[0.2, \; 0.9]$) and the AQM. In this case, TCN corresponds to DCTCP-RED (as explained by the authors, in presence of one single queue TCN behaves just like DCTCP-RED).
+
+The default topology present in the repository considers 8 servers per leaf switch, 4 leaf switches and 4 spine switches, although in the paper a different topology is mentioned (16 servers per leaf, 8 leaf switches and 8 spine switches). We have explored both topologies, and compared the obtained results. The ECN# specific values are recovered from the repository, as in the paper few details were given.
 
 ### Recreating experiments on the queue occupancy (Figure 16)
 
@@ -196,7 +221,6 @@ The code provided by authors includes the executable `queue-track` to be ran for
 This corresponds to Section 5.4.1 and Figure 17 of the paper. 
 
 As barely any details are presented in the paper, we had to assume that mostly the default values of the `queue-track` are used. The important value to change is the number of concurrent senders, which is changed from 25 to 200 in the steps of 25, as can be seen in the Figure 17 of the paper.
-
 
 ### Recreating the experiments with packer schedulers (Figure 20)
 
@@ -212,86 +236,96 @@ The other values have been left as the default ones.
 
 # 4. Experiment Result
 
-<!-- Explain how your experiment was conducted and then what results you acquired. 
-Afterwards, compare your results with those of the paper and state your
-takeaways.
-
-Step-by-step description:
-
-1. Execution procedure
-1. Measurement method
-1. Number of runs
-1. Statistical treatment (mean, median, CI, etc.)
-
-Also Describe:
-
-- How did you ensure correctness (did you check also other metrics to make sure the experiment is running correctly?)
-- Did you do any debugging? Discuss issues you faced and how you overcame them (if applicable consider allocating a subsection for this item) 
-
-Share your result and compare them with the paper's. Then discuss your takeaways.
-
-For comparison include:
-
-- Graph(s) or table(s)
-- Matching axes and units with the source paper
-- Error bars if applicable
-- You may want to report difference with the original results (e.g., absolute
-number or percentage).
-
-For example: -->
-
-<!-- <center>
-  <div style="display:inline-block; width:30%;">
-    <img
-      alt="The figure shows that method A improves throughput compared to method B"
-      src="figures/one_bar.png"
-      style="width:100%"
-      />
-    <p>Figure 2: The figure shows that method A improves throughput compared to method B</p>
-  </div>
-  <div style="display:inline-block; width:30%; padding-left: 1em">
-    <img
-      alt="Our reproduction of Figure 1 shows results with the similar trend as claimed by the paper"
-      src="figures/two_bar.png"
-      style="width:100%"
-      />
-    <p>Figure 3: Our reproduction of Figure 1 shows results with the similar trend as claimed by the paper</p>
-  </div>
-</center> -->
-
-<!-- > **Reminder:** the goal is not achieve the exact results of the paper, but to do a rigorous experiment with similar assumptions from the source paper and gain insight. The insight can be correctness of work, failure to reproduce same results, or even infeasibility of doing such experiment for interesting reasons. -->
-
 We replicated several of the results of the paper in order to assess its various claims about ECN#'s performance. Each is documented below.
 
-### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
-Running the `job.sh` scripts provided in our repository under the `fig2` folder with the exact methodology described in the previous section, after lots of fine-tuning the simulation parameters and topology until the final arguments presented in the previous section. Specifically, we ran on the Galileo 100 cluster a script that varied `seed` across `(233 234 235)` and `threshold` across `(40 80 120 160 200 300)` with the following parameters: 
+### Recreating 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously` (Figure 2)
+
+The simulation was made by running the `job.sh` script (through SLURM) provided in our repository under the `fig2` folder with the exact methodology described in the previous section. In order to get the right results we performed much parameters fine-tuning: specifically, we ran on the Galileo100 cluster a script that varied `seed` across `(233 234 235)` and `threshold` across `(40 80 120 160 200 300)` with the following parameters: 
+
 ```bash
 ./waf --run "large-scale \
-                    --randomSeed=${seed} \
-                    --load=0.5 \
-                    --ID=${id} \
-                    --AQM=TCN \
-                    --TCNThreshold=${threshold} \
-                    --leafCount=2 \
-                    --spineCount=1 \
-                    --serverCount=4 \
-                    --EndTime=4 \
-                    --FlowLaunchEndTime=3"
-  ```
-  This script took several hours to complete on the cluster (our laptops could not handle this much pressure and would have likely exploded if we did it locally :D). 
+    --randomSeed=${seed} \
+    --load=0.5 \
+    --ID=${id} \
+    --AQM=TCN \
+    --TCNThreshold=${threshold} \
+    --leafCount=2 \
+    --spineCount=1 \
+    --serverCount=4 \
+    --EndTime=4 \
+    --FlowLaunchEndTime=3"
+```
 
- we achieved the following results:
+This simulation achieved the following results:
+
 <center>
-  <div style="display:inline-block; width:30%; padding-left: 1em">
+  <div style="display:inline-block; width:90%; padding-left: 1em">
     <img
-      alt="Figure 3: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
+      alt="Figure 3: Our reproduction of Figure 2 on the simulated ns-3 large-scale setup"
       src="figures/Recreated-Fig2.png"
-      style="width:80%"
+      style="width:100%"
       />
-    <p>Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup</p>
+    <p>Figure 1: Our reproduction of Figure 2 on the simulated ns-3 large-scale setup</p>
   </div>
 </center>
-Although there is a clear difference between the replicated Figure 2 and the paper's original, this stems from the topology difference, and ours is simulated while theirs is on a real testbed. Nonetheless, we actually derive a similar overall trend: the 99th percentile is heavily penalized as we increase the marking threshold. The most shocking difference was that no matter how we configured our experiment, we could not get the average FCT to decrease as the marking threshold increased, i.e., higher throughput. In our results, it always gradually increased. We thought about this a lot and concluded it must be because our topology is less congested since we have more routes than the original testbed, and therefore, we do not see a throughput increase with a higher threshold, as there is not a single simple bottleneck as in the original paper. Nonetheless, our conclusion remains the same: ECN penalizes latency as we increase the threshold. 
+
+Although there is a clear difference between the replicated Figure 2 and the paper's original, we believe this mainly stems from the topology difference, as ours is simulated while theirs is on a real testbed. Nonetheless, we actually derive a similar overall trend: the 99th percentile is heavily penalized as we increase the marking threshold. The most important difference was that no matter how we configured our experiment, we could not get the average FCT to decrease as the marking threshold to increase (i.e., reach a higher throughput): in our results, it always gradually increased. We concluded that it must be because our topology is less congested, since we have more routes than the original testbed, and therefore we do not see a throughput increase with a higher threshold, as there is not a single simple bottleneck as in the original paper. Our conclusion remains nonetheless the same: ECN penalizes latency as we increase the threshold. 
+
+### Recreating the simulation on Leaf-Spine topology (Figures 13 and 14)
+
+In order to prove the efficiency of ECN#, the authors of the paper simulated two different kinds of workloads and subjected ECN# to it. Specifically, the simulations were carried out in two different settings: a *testbed* and a *large scale* setting. We will focus on the reproduction of the simulations under the large scale setting only, as it was the only one reproducible through a simulator. The two workloads proposed by the authors are called **web search** and **data mining**: the first is characterized by small, bursty flows, while the second is mainly composed of long and steady flows.
+
+As per the original paper, the topology is based on the Leaf-Spine model, and in our case it counts 8 spine switches, 8 leaf switches and 128 total servers (16 per leaf switch). This topology will be referred to as `16x8x8`.
+
+The comparison focuses explicitely on the performances of ECN# in contrast to the ones of DCTCP-RED, hence the reason why the authors reported the normalized FCT in the plots. The original results achieved by the authors can be observed in Figures 13 and 14 in the original paper. Here below are shown the results obtained from our simulations with the **web search** workload:
+
+<center>
+  <div style="display: inline-block; width: 100%">
+    <img
+      alt="Figure 1: FCT results for the web search workload"
+      src="figures/Recreated-Fig13_16x8x8.png"
+      style="width: 100%;"
+      />
+    <p>Figure 2: FCT results for the web search workload</p>
+  </div>
+</center>
+
+With respect to the original measurements, the average FCT and the 99th percentile keep a similar behaviour; the $(0, \; 100\text{kB}]$ average instead starts showing improvements over DCTCP-RED with a load of more than 80%. The only measurement that appears to be completely different is the average for flows of size $[10\text{mB}, \; \infty)$: standing by the paper, ECN# and DCTCP-RED should perform very similarly, but in our case the simulation shows a less consistent behaviour, with worse performances as the load increases. These simulations have been repeated with different seeds to test if the shown behaviour was repeated over runs with different seeds or not, but the results kept having similar trends, especially the spikes that can be seen in the $(0, \; 100\text{kB}]$ 99th percentile plot.
+
+The situation changes with the **data mining** workload:
+
+<center>
+  <div style="display: inline-block; width: 100%">
+    <img
+      alt="Figure: FCT results for the data mining workload"
+      src="figures/Recreated-Fig14_16x8x8.png"
+      style="width: 100%;"
+      />
+    <p>Figure 3: FCT results for the data mining workload</p>
+  </div>
+</center>
+
+By comparing such results with the ones shown in the paper, we see a closer resemblance: except for a couple spikes in the $(0, \; 100\text{kB}]$ average and $(0, \; 100\text{kB}]$ 99th percentile, the behaviour is consistent. The performances for the average FCT show that ECN# takes on average $0.95\times$ less time than DCTCP-RED; in the $(0, \; 100\text{kB}]$ and $[10\text{mB}, \; \infty)$, as the load approaces $100\%$, we see that ECN# achieves better performances overall, diverging from DCTCP-RED.
+
+All of such results have been obtained with the Leaf-Spine topology described in the paper, but we wanted to explore how ECN# would perform in the topology proposed in the GitHub repository of the authors: indeed, the simulator's default topology requires 8 servers per leaf switch, 4 leaf switches and 4 spine switches. This topology will be labeled as `8x4x4`. After running the simulations with the new topology, we obtained the following results:
+
+<center>
+  <div style="display: inline-block; width: 100%">
+    <img
+      alt="Figure: FCT results for the web search on the 8x4x4 topology"
+      src="figures/Recreated-Fig13_8x4x4.png"
+      style="width: 100%;"
+      />
+    <img
+      alt="Figure: FCT results for the web search on the 8x4x4 topology"
+      src="figures/Recreated-Fig14_8x4x4.png"
+      style="width: 100%;"
+    />
+    <p>Figure 4: FCT results for the web search (up) and data mining workload (below) on the 8x4x4 topology</p>
+  </div>
+</center>
+
+We can notice how ECN# behaves in a more stable way with high throughput flows, while it struggles to keep a steady performance with bursty flows. Also, notice how the results for each workload in this topology greatly differs from the ones in the `16x8x8` topology: for the smaller topology there is much more instability, and no clear convergence/divergence (except for a few cases).
 
 ### Recreating the experiment on the queue occupancy (Figure 16)
 
@@ -344,7 +378,7 @@ To run the experiment, the `queue-track` tool was ran with the following configu
 The results are as presented in the figure below:
 
 <center>
-  <div style="display:inline-block; width:90%; padding-left: 1em">
+  <div style="display:inline-block; width:95%; padding-left: 1em">
     <img
       src="figures/Recreated-Fig16a.png"
       style="width:30%"
@@ -357,24 +391,23 @@ The results are as presented in the figure below:
       src="figures/Recreated-Fig16c.png"
       style="width:30%"
       />
-    <p>Figure: Our reproduction of Figure 16. The experiment measured the queue occupancy during different schemes in a short window of 0.005 seconds during a flow burst.</p>
+    <p>Figure 5: Our reproduction of Figure 16. The experiment measured the queue occupancy during different schemes in a short window of 0.005 seconds during a flow burst.</p>
   </div>
 </center>
 
-The exact lines and values are not neccesarily same as in the paper, possibly due to small differences in the configuration. However, the patterns are still clear and match the results from the paper. DCTCP-RED-Tail reaches the maximum queue occupancy of 416 packets, CoDel reaches the buffer limit of 600 packets, while ECN# reaches only 318 packets. This replicates the results that no packets are dropped when handling burst with ECN#. However, one inconsistency is that in the paper DCTCP-RED-Tail obtains the queue occupancy of 182 packets overall, while in our experiment it gets lower and close to zero after the burst. This can be explained in the possible difference of the simulation time configuration or the difference in the burst or background traffic generation, which is not fully explained in the paper.
+The exact lines and values are not neccesarily the same as in the paper, possibly due to small differences in the configuration. However, the patterns are still clear and match the results from the paper. DCTCP-RED-Tail reaches the maximum queue occupancy of 416 packets, CoDel reaches the buffer limit of 600 packets, while ECN# reaches only 318 packets. This replicates the results that no packets are dropped when handling burst with ECN#. However, one inconsistency is that in the paper DCTCP-RED-Tail obtains the queue occupancy of 182 packets overall, while in our experiment it gets lower and close to zero after the burst. This can be explained in the possible difference of the simulation time configuration or the difference in the burst or background traffic generation, which is not fully explained in the paper.
 
 ### Recreating the experiments on bursty flows with different sender size (Figure 17)
 
-`queue-track` was used as the main tool. The bash script that was used to sweep over the different schemes and different number of the concurrent senders is present in `ecnsharp-fig-17/run_fct_sweep.sh`. The resulting graph is as follows:
-
+We used `queue-track` as the main tool. The bash script that was used to sweep over the different schemes and different number of the concurrent senders is present in `ecnsharp-fig-17/run_fct_sweep.sh`. The resulting graph is as follows:
 
 <center>
-  <div style="display:inline-block; width:50%; padding-left: 1em">
+  <div style="display:inline-block; width:90%; padding-left: 1em">
     <img
       src="figures/Recreated-Fig17.png"
       style="width:100%"
       />
-    <p>Figure: Our reproduction of Figure 17. The experiment measured the flow completion time during burst traffic with different number of concurrent senders.</p>
+    <p>Figure 6: Our reproduction of Figure 17. The experiment measured the flow completion time during burst traffic with different number of concurrent senders.</p>
   </div>
 </center>
 
@@ -389,54 +422,23 @@ To conclude, we suspect that the results for this figure could not be reproduced
 After running the experiment with `mq` executable and parsing the results, the following results have been achieved:
 
 <center>
-  <div style="display:inline-block; width:80%; padding-left: 1em">
+  <div style="display:inline-block; width:90%; padding-left: 1em">
     <img
       src="figures/Recreated-Fig20a.png"
-      style="width:45%"
+      style="width:48%"
       />
     <img
       src="figures/Recreated-Fig20b.png"
-      style="width:45%"
+      style="width:48%"
       />
-    <p>Figure: Our reproduction of Figure 20. The experiment measured and compared ECN# with TCN when using an arbitrary packet scheduler.</p>
+    <p>Figure 7: Our reproduction of Figure 20. The experiment measured and compared ECN# with TCN when using an arbitrary packet scheduler.</p>
   </div>
 </center>
 
 The results match the ones from the paper. To be more precise, the flow throughputs match the Figure 20a, and the FCT of short flows get a similar cummulative distribution function as in the paper. The only caveat is that the paper measure goodput, whereas in our experiment we have used throughput to plot. However, goodput is just only slightly smaller, and the trend would be very similar. Because of this, we have decided to stick with the throughput for our calculations for simplicity.
 
-### Recreating the simulation on Leaf-Spine topology
-
-In order to prove the efficiency of ECN#, the authors of the paper simulated two different kinds of workloads and subjected ECN# to it. Specifically, the simulations were carried out in two different settings: a *testbed* and a *large scale* setting. We will focus on the reproduction of the simulations under the large scale setting only, as it was the only one reproducible through a simulator. The two workloads proposed by the authors are called **web search** and **data mining**: the first is characterized by small, bursty flows, while the second is mainly composed of long and steady flows.
-
-As per the original paper, the topology is based on the Leaf-Spine model, and in our case it counts 8 spine switches, 8 leaf switches and 128 total servers (16 per leaf switch). In order to run the simulation, we started from the base command provided in the author's repository:
-
-```bash
-./waf --run "large-scale \
-    --randomSeed=233 \
-    --load=[0.2, 0.9] \
-    --ID=LargeScale \
-    --AQM=[TCN|ECNSharp] \
-    --ECNShaprInterval=70 \
-    --ECNSharpTarget=10 \
-    --ECNShaprMarkingThreshold=70"
-```
-
-The comparison focuses explicitely on the performances of ECN# in contrast to the ones of DCTCP-RED, hence the reason why the authors reported the normalized FCT in the plots. The original results achieved by the authors can be observed in Figures 13 and 14 in the original paper. Here below are shown the results obtained from our simulations:
-
-<center>
-  <div style="display: inline-block; width: 100%">
-    <img
-      alt="Figure 1: FCT results for the web search workload"
-      src="ecnsharp-fig-13-14/figure13_16x8x8.png"
-      style="width: 100%"
-      />
-    <p>Figure NUMXX: FCT results for the web search workload</p>
-  </div>
-</center>
-
-With respect to the original measurements
-
 # 5. Further Exploration
+
 <!-- 
 In this project you are required to also explore a research question of your own. Either:
 
@@ -446,15 +448,11 @@ In this project you are required to also explore a research question of your own
 Discuss which approach you take, and what you explored. Explain what was your
 motivation and importance of your question. -->
 
-For the extension, we wanted to test the effectiveness of NS3 on a new topology. The paper only demonstrates its effectiveness on a Leaf-Spine two-tier network topology with 128 servers, and we were curious if a different topology would show similar trends. We were particularly curious about Fat Trees because their three-tier architecture would add complexity to the network and provide more possible flow paths. 
+As extension, we wanted to test the effectiveness of ns-3 on a new topology. The paper only demonstrates its effectiveness on a Leaf-Spine two-tier network topology with 128 servers, and we wondered if a different topology would show similar trends. In particular, we wanted to explore how ECN# would perform in Fat Trees networks because their three-tier architecture would add complexity to the topology and provide more possible flow paths. 
 
-This is an important question to ask because topology can drastically change the available routes that flows can take and possibly increase RTT variations, and the fat tree topology is very common in real-life datacenters. 
+This is an important question to ask, because topologies can drastically change the available routes that flows can take and possibly increase RTT variations; this becomes especially relevant with the Fat Tree topology, which is very common in real-life datacenters. We also wondered if we would see the same trends as in their figures, specifically for average FCT and for the 99th percentile FCT. In order to check its effectiveness, we compared ECN# to DcTCP-RED (which is equivalent to TCN since we use one queue, as explicitly stated by the authors in their paper).
 
-Since we already saw from our experimentation on recreating Figure 2 that topology really matters and may lead to differing results, we were curious if ECN# would perform well. We also wondered if we would see the same trends as in their figures, specifically for average FCT and for the 99th percentile FCT. 
-
-Therefore, we decided to create the new topology and compare it under otherwise same circumstances as the authors do in their large scale test, specifically by comparing ECN# to DcTCP-RED (which is equivalent to TCN since we use one queue, as explicitly stated by the authors in their paper).
-
-We dug into the code to find where the topology is defined, which is in `examples/rtt-variations/large-scale.cc`. Here, the NS3 topology is defined. We began by defining the configuration for a fat-tree topology, choosing K=4 as the default but allowing it to be modified.
+The GitHub repositorry contains also the topology definition for ns-3, which is in `examples/rtt-variations/large-scale.cc`. We began by defining the configuration for a Fat-Tree topology, choosing $K = 4$ as the default value, but allowing it to be modified through launch argument.
 
 ```C
 int K = 4;
@@ -475,15 +473,15 @@ const int EDGE_COUNT = POD_COUNT * EDGE_PER_POD;
 const int AGG_COUNT = POD_COUNT * AGG_PER_POD;
 const int SERVER_PER_EDGE = K / 2;
 const int TOTAL_SERVER_COUNT = EDGE_COUNT * SERVER_PER_EDGE;
-```
 
-We added it as a command-line parameter for ease of changing it:
-```C
+// ...
+
+// Here K was added as a command-line parameter for ease of changing it during experimentation
 cmd.AddValue ("K", "Fat-tree k parameter. Must be even and at least 2", K);
 ```
 
-We then tried changing as little as possible compared to the original topology to adapt it to the new one. 
-We defined our NS3 containers (and installed them using `internet.Install (...)`):
+We tried changing as little as possible from the previous code to adapt it to the new one: we wanted to make this simulation more similar to the one defined by the paper's authors. We defined our ns-3 containers and installed them using `internet.Install (...)`:
+
 ```C
 NodeContainer core;
 core.Create (CORE_COUNT);
@@ -495,11 +493,9 @@ NodeContainer servers;
 servers.Create (TOTAL_SERVER_COUNT);
 ```
 
-For generating the links, we really struggled. Since this course was not focused on teaching NS3 and this part was quite confusing, we used the help of generative AI to define the for loop that creates the links (i.e., server <--> edge, edge <--> aggregation, aggregation <--> core). We wanted to be transparent about this, and believe that this is a fair usage of AI, as the whole experiment is our own original work, but the low-level NS3 implementation was tricky and not the focus of our project, rather an implementation detail, so it was helpful having it teach us how to make these links in NS3.
+Generating the links was quite challenging: since we didn't have much expertise with ns-3, we used the help of generative AI tools to define the `for` loop that creates the links (i.e., server <--> edge, edge <--> aggregation, aggregation <--> core). We want to be transparent about this, as we believe that this is a fair usage of AI which only aided through the course of the experiment, leaving to us the responsibility of decision-making and the creative input.
 
-Lastly, we replaced the `large-scale.cc` file with the fat-tree topology implementation, which is available under the `fat-tree` folder of our repository. Running a 0.5-second simulation on our laptops demonstrated correctness, but caused a high risk of nuclear explosion and made us go bankrupt with fried laptops. Therefore, we wanted to deploy this on the Galileo 100 cluster. However, this was tricky because the cluster uses read-only file systems in Apptainer (to run the Docker image). We tried recreating the experiment outside of Docker, and ran into a million version dependency problems (Python 2 is not available on the cluster for some reason). Then we found a way to clone the image to a writeable sandbox image, and mounted that with the slurm job to use our modified file. This was a long process to get working, but eventually we got it using our updated topology, we compiled it (compiled the wrong image and wondered why it did not change way too many times than we would like to admit...), and eventually got it working! 
-
-We modified our Slurm script from Figure 2 to instead vary load, not threshold, since we wanted to recreate Figure 9-style plots from the paper (which were done on large-scale testing of the Leaf-Spine topology, 128 servers). 
+Lastly, we replaced the `large-scale.cc` file with the Fat-Tree topology implementation, which is available under the `fat-tree` folder of our repository. The simulation was ran on CINECA's Galileo100 cluster through an Apptainer container. We modified our SLURM script from Figure 2 to instead vary load instead of threshold, since we wanted to recreate Figure 9-style plots from the paper (which were done on large-scale testing of the Leaf-Spine topology, 128 servers).
 
 ## 5.1. Methodology and Result
 
@@ -511,9 +507,10 @@ Include:
 - Graph(s) or table(s)
 - How the experiment was conducted (share the details)
 - What did you discover? -->
-We used the Fat Tree with K=4, because larger values took so long that we could not complete a single trial of the experiment, so they were just too large for us to simulate. Our experiment used the same $3\times$ RTT variations as in the authors' original large-scale test setup (other than the topology, we changed as little as possible).
+We simulated the Fat-Tree topology with $K = 4$ because larger values would take an extremely large amount of time to complete. Our experiment used the same $3 \times$ RTT variations as in the authors' original large-scale test setup (other than the topology, we changed as little as possible).
 
-For the no ECN# version, we used TCN, which is equivalent to DcTcp-RED with one queue, according to the paper (and is what they used for all their comparisons). This experiment was run across loads $0.1$ to $0.9$ with increments of $0.1$ (a bit more than the paper's $0.2$ to $0.9$ in Figure 9). We ran it over only one seed (233), because this simulation took over three hours to run. Even running it overnight, we did not want to abuse our cluster access, so this is a large limitation of our experiment- ideally, we would have run it over three seeds and averaged. We used the optimal marking threshold recommended by the paper, which was 250KB, and by our mapping, therefore 200ms.
+For the no ECN# version, we used TCN, which is equivalent to DcTcp-RED with one queue, according to the paper. This experiment was run across loads $0.1$ to $0.9$ with increments of $0.1$ (a bit more than the paper's $0.2$ to $0.9$ in Figure 9). We ran it over only one seed (233), because this simulation took over three hours to run. Even by running it overnight, we did not want to abuse our cluster access (as it's shared with other colleagues), making this a limitation of our experiment. Ideally, we would have run it over three seeds and averaged. We used the optimal marking threshold recommended by the paper, which was 250KB, and by our mapping, therefore 200ms.
+
 ```bash
 ./waf --run "large-scale \
     --randomSeed=${seed} \
@@ -526,7 +523,8 @@ For the no ECN# version, we used TCN, which is equivalent to DcTcp-RED with one 
     --FlowLaunchEndTime=0.5"
 ```
 
-and for the version using ECN#, we used the suggested optimal parameters according to the paper which are based onthe 90th percentile RTT, set as follows:
+For the version using ECN#, we used the suggested optimal parameters according to the paper which are based on the 90th percentile RTT, set as follows:
+
 ```bash
 ./waf --run "large-scale \
     --randomSeed=${seed} \
@@ -541,20 +539,20 @@ and for the version using ECN#, we used the suggested optimal parameters accordi
     --FlowLaunchEndTime=0.5"
 ``` 
 
-In total this simulation took over 6 hours to run on the Galileo 100, which is why we could neither increase the number of trials or the simulation time by any more than 1s (which is already double the default of the provided NS3 code, but less than the 5 seconds used by the authors). The results are as follows:
+The results are here shown:
 
 <center>
-  <div style="display:inline-block; width:30%; padding-left: 1em">
+  <div style="display:inline-block; width:90%; padding-left: 1em">
     <img
-      alt="Figure 1: Our reproduction of Figure 2 on the simulated NS3 large-scale setup"
+      alt="Figure 1: Our reproduction of Figure 2 on the simulated ns-3 large-scale setup"
       src="figures/Fat-Tree-Experiment.png"
       style="width:100%"
       />
-    <p>Figure 2: ECN# vs TCN Performance Comparison on Fat Tree with K=4</p>
+    <p>Figure 8: ECN# vs TCN Performance Comparison on Fat Tree with K=4</p>
   </div>
 </center>
 
-As we can see, ECN# is still able to outperform DCTCP-RED. This is more evident in the average FCT, while the 99th percentile is not as clear, and certainly less of a gap than in the paper's short flow difference, for example, in Figure 9b, which looks at the average short flow completion time difference. We believe this is because our simulation ran for only 1 second and only over one seed, so the short flow behaviour is not very representative of short flows in a larger system ($K \gt 4$) or with a larger simulation time (ideally $\gt 4s$) and with more trials over more seeds averaged out. Nonetheless, we are able to see the effectiveness of ECN#, as even over such a short simulation period, it is able to achieve both better overall average flow completion time and 99th percentile short flow, demonstrating how it has achieved both throughput and latency improvements, even if at this small scale, they are marginal. We are curious to see what this would look like on a larger experiment, but that would have taken days to run, so we unfortunately will not be able to simulate this ourselves. 
+As we can see, ECN# is still able to outperform DCTCP-RED. This is more evident in the average FCT, while the 99th percentile is not as clear, and certainly less of a gap than in the paper's short flow difference shown, for example, in Figure 9b, which looks at the average short flow completion time difference. We believe this is because our simulation ran for only 1 simlated second and only over one seed, so the short flow behaviour is not very representative of short flows in larger systems ($K \gt 4$) or than simulations ran on larger simulation times (ideally $\gt 4s$) for more trials over more seeds averaged out. Nonetheless, we are able to see the effectiveness of ECN#, since even over such a short simulation period it is able to achieve both better overall average flow completion time and 99th percentile short flow. This demonstrates how ECN# has achieved both throughput and latency improvements, even if at this small scale they are marginal. A possible future experiment would be to run a much larger simulation with higher values of $K$ and for larger amounts of time. 
 
 # 6. Reproducibility Assessment of the Paper
 
@@ -564,12 +562,11 @@ As we can see, ECN# is still able to outperform DCTCP-RED. This is more evident 
 - Was the artifact usable?
 - How difficult was reproduction? -->
 
-Part of the paper was very well documented and reproducible, as the authors provide a Docker image with the preconfigured NS3 simulation to run certain experiments. However, this only pertains to the large-scale testing they did. All earlier graphs, including Figure 2 as an example, required us to experiment with NS3 ourselves in order to try to replicate. The code itself was well written, although it did contain some typos even in the command line interface. Overall, the authors did a great job of ensuring reproducibility. 
+Part of the paper was very well documented and reproducible, as the authors provide a Docker image with the preconfigured ns-3 simulation to run certain experiments. However, this only pertains to the large-scale testing they did. All earlier graphs, including Figure 2 as an example, required us to experiment with ns-3 ourselves in order to try to replicate. The code itself was well written, although it did contain some typos even in the command line interface. Some parameters were not explicitly stated, and were instead recovered from the simulations' default values. However, after recreating especially the Leaf-Spine topology, we have the doubt that the standard parameters were the correct ones (for instance, the default topology is not coherent with the one defined in the paper). Overall, the authors did a good job of ensuring reproducibility. 
 
 # 7. Conclusion
 
-Conclude the report by mentioning the takeaways of experiments you did
-
+This project allowed us to better understand how congestion control works and how even simple ideas (like to have a dynamic threshold for packet marking) can be effective in both very complicated and relatively simple networks. We learned how to reproduce the results of an academic experiment, and realized the importance of making science accessible and reproducible. As technical skills, we learned some basics of ns-3 and how to recreate some topologies.
 
 ---
 
