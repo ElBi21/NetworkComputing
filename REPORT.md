@@ -109,8 +109,6 @@ cd ~/ns3-ecn-sharp
 ./waf
 ```
 
-### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
-
 <!-- *Note:* This section should contain enough information to allow someone else to
 reproduce *your* report. Share hardware and/or software setup relevant to your
 experiment. For example:
@@ -143,6 +141,7 @@ If something was **missing in the original paper**, state it. For example:
 > The paper does not specify X. We assumed Y (or explored range *a* to *b*). -->
 
 ### Recreating Figure 2, 'Instantaneous Marking cannot achieve high throughput and low latency simultaneously`
+
 The authors conducted the experiment of Figure 2 on a real-life testbed. They have 8 hosts connected with 10 Gbps Ethernet adapters and a Mellanox SN2100 switch. With a link speed of 10Gbps, a load of 50%, and $3\times$ RTT variations (i.e., they vary from 70μs to 210μs), and from what we understand, they continue to use the same web workload using their previous experiment's Apache web server and `ApacheBench` for generating 3000 HTTP requests. 
 
 
@@ -317,15 +316,22 @@ The exact lines and values are not neccesarily same as in the paper, possibly du
 
 ### Recreating the simulation on Leaf-Spine topology
 
-In order to prove the efficiency of ECN#, the authors of the paper simulated two different kinds of workloads and subjected ECN# to it. Specifically, the simulation was carried out in two different settings: a *testbed* and a *large scale* setting. We will focus on the reproduction of the simulation under the large scale setting only, as it was the only one reproducible through a simulator.
+In order to prove the efficiency of ECN#, the authors of the paper simulated two different kinds of workloads and subjected ECN# to it. Specifically, the simulations were carried out in two different settings: a *testbed* and a *large scale* setting. We will focus on the reproduction of the simulations under the large scale setting only, as it was the only one reproducible through a simulator. The two workloads proposed by the authors are called **web search** and **data mining**: the first is characterized by small, bursty flows, while the second is mainly composed of long and steady flows.
 
 As per the original paper, the topology is based on the Leaf-Spine model, and in our case it counts 8 spine switches, 8 leaf switches and 128 total servers (16 per leaf switch). In order to run the simulation, we started from the base command provided in the author's repository:
 
 ```bash
-./waf --run "large-scale --randomSeed=233 --load=[0.2, 0.9] --ID=ECNSharp --AQM=[TCN|ECNSharp] --ECNShaprInterval=70 --ECNSharpTarget=10 --ECNShaprMarkingThreshold=70"
+./waf --run "large-scale \
+    --randomSeed=233 \
+    --load=[0.2, 0.9] \
+    --ID=LargeScale \
+    --AQM=[TCN|ECNSharp] \
+    --ECNShaprInterval=70 \
+    --ECNSharpTarget=10 \
+    --ECNShaprMarkingThreshold=70"
 ```
 
-The comparison focuses explicitely on the performances of ECN# in contrast to the ones of DCTCP-RED, hence the reason why the authors considered the normalized FCT. The original results can be observed in Figures 13 and 14 in the original paper. Here below are shown the results obtained from the simulations:
+The comparison focuses explicitely on the performances of ECN# in contrast to the ones of DCTCP-RED, hence the reason why the authors reported the normalized FCT in the plots. The original results achieved by the authors can be observed in Figures 13 and 14 in the original paper. Here below are shown the results obtained from our simulations:
 
 <center>
   <div style="display: inline-block; width: 100%">
